@@ -265,12 +265,6 @@ if ( empty( $logo_url ) || stripos( $logo_url, 'Logo-tong-hop' ) !== false || st
 				<span class="line"></span>
 				<span class="line"></span>
 				<span class="line"></span>
-				<span id="pulseMe">
-					<span class="bar left"></span>
-					<span class="bar top"></span>
-					<span class="bar right"></span>
-					<span class="bar bottom"></span>
-				</span>
 			</button>
 		</div>
 	</div>

@@ -1257,27 +1257,92 @@ header {
 }
 
 /* 10. Floating Fixed CTA */
+#buttonMenu #pulseMe {
+	display: none !important;
+}
+
 .cta-fixed {
 	position: fixed;
 	right: 24px;
 	bottom: 40px;
 	z-index: 999;
-	background: transparent;
-	padding: 10px 8px;
-	border-radius: 20px;
-	box-shadow: none;
-	transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	background: transparent !important;
+	padding: 0 !important;
+	border-radius: 0;
+	box-shadow: none !important;
+	pointer-events: none;
+	transition: transform 0.3s ease;
 
 	@media (max-width: 768px) {
 		right: 14px;
 		bottom: 24px;
-		padding: 8px 6px;
-		border-radius: 16px;
+		padding: 0 !important;
 	}
 
 	&.is-in-footer {
-		background: #ffffff;
-		box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22), 0 2px 10px rgba(30, 96, 163, 0.12);
+		background: transparent !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+
+		ul li {
+			background: linear-gradient(145deg, #ffffff 0%, #f0f4f9 100%) !important;
+			border: 1px solid rgba(255, 255, 255, 0.95) !important;
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), 0 3px 8px rgba(0, 0, 0, 0.2), inset 0 2px 2px #ffffff, inset 0 -2px 3px rgba(0, 0, 0, 0.1) !important;
+
+			a {
+				color: #1e60a3 !important;
+
+				svg {
+					stroke: #1e60a3 !important;
+					color: #1e60a3 !important;
+				}
+
+				svg.spl-icon--phone,
+				svg.spl-icon--envelope {
+					fill: none !important;
+					stroke: #1e60a3 !important;
+				}
+
+				svg.spl-icon--messenger,
+				svg.spl-icon--zalo {
+					fill: #1e60a3 !important;
+					stroke: none !important;
+				}
+
+				.zalo-text {
+					color: #1e60a3 !important;
+				}
+			}
+
+			&:hover {
+				background: #eef5fc !important;
+				transform: translateY(-3px) scale(1.08) !important;
+				box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45), 0 4px 10px rgba(0, 0, 0, 0.25), inset 0 2px 2px #ffffff !important;
+
+				a svg {
+					stroke: #154577 !important;
+					color: #154577 !important;
+				}
+
+				a svg.spl-icon--messenger,
+				a svg.spl-icon--zalo {
+					fill: #154577 !important;
+				}
+
+				a .zalo-text {
+					color: #154577 !important;
+				}
+			}
+
+			&.item-phone {
+				&::before {
+					animation: cta-radar-white 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite !important;
+				}
+				&::after {
+					animation: cta-radar-white 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite 1.2s !important;
+				}
+			}
+		}
 	}
 
 	ul {
@@ -1287,23 +1352,27 @@ header {
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		pointer-events: none;
 
 		@media (max-width: 768px) {
 			gap: 10px;
 		}
 
 		li {
+			position: relative;
 			width: 48px;
 			height: 48px;
 			border-radius: 50%;
-			background-color: #1e60a3;
-			box-shadow: 0 4px 16px rgba(30, 96, 163, 0.35);
+			background: linear-gradient(145deg, #2470bf 0%, #17528e 100%);
+			border: 1px solid rgba(255, 255, 255, 0.25);
+			box-shadow: 0 6px 18px rgba(30, 96, 163, 0.42), 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1.5px 2px rgba(255, 255, 255, 0.4), inset 0 -2px 3px rgba(10, 38, 70, 0.4);
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			cursor: pointer;
 			pointer-events: auto;
-			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+			overflow: visible;
+			transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, background-image 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 
 			@media (max-width: 768px) {
 				width: 42px;
@@ -1316,6 +1385,7 @@ header {
 				justify-content: center;
 				width: 100%;
 				height: 100%;
+				border-radius: 50%;
 				text-decoration: none;
 				color: #ffffff;
 
@@ -1324,19 +1394,21 @@ header {
 					color: #ffffff;
 					fill: none;
 					stroke: #ffffff;
-					transition: transform 0.3s ease;
+					transition: transform 0.3s ease, stroke 0.3s ease, color 0.3s ease;
 				}
 
 				svg.spl-icon--messenger,
 				svg.spl-icon--zalo {
 					fill: #ffffff;
 					stroke: none;
+					transition: fill 0.3s ease;
 				}
 
 				svg.spl-icon--phone,
 				svg.spl-icon--envelope {
 					fill: none;
 					stroke: #ffffff;
+					transition: stroke 0.3s ease;
 				}
 
 				.zalo-text {
@@ -1356,15 +1428,109 @@ header {
 			}
 
 			&:hover {
-				background-color: #154577;
+				background: linear-gradient(145deg, #1b5a9b 0%, #123e6d 100%);
 				transform: translateY(-3px) scale(1.08);
-				box-shadow: 0 8px 22px rgba(21, 69, 119, 0.5);
+				box-shadow: 0 10px 24px rgba(21, 69, 119, 0.55), 0 3px 8px rgba(0, 0, 0, 0.2), inset 0 1.5px 2px rgba(255, 255, 255, 0.45), inset 0 -2px 3px rgba(10, 38, 70, 0.5);
 
 				a svg {
 					transform: scale(1.08);
 				}
 			}
+
+			/* Alarm radar ripple & ringing bell for Hotline */
+			&.item-phone {
+				animation: cta-beacon-pulse 2.4s ease-in-out infinite;
+
+				&::before,
+				&::after {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+					border-radius: 50%;
+					pointer-events: none;
+					z-index: -1;
+					box-sizing: border-box;
+				}
+
+				&::before {
+					animation: cta-radar 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+				}
+
+				&::after {
+					animation: cta-radar 2.4s cubic-bezier(0.2, 0.6, 0.35, 1) infinite 1.2s;
+				}
+
+				a svg {
+					animation: cta-phone-ring 3.6s ease-in-out infinite;
+					transform-origin: center center;
+				}
+
+				&:hover {
+					animation-play-state: paused;
+					a svg {
+						animation-play-state: paused;
+					}
+				}
+			}
 		}
+	}
+}
+
+/* Keyframes for CTA Alarm / Alert Effects */
+@keyframes cta-radar {
+	0% {
+		transform: scale(0.96);
+		border: 2px solid rgba(30, 96, 163, 0.75);
+		background-color: rgba(30, 96, 163, 0.25);
+		opacity: 0.95;
+	}
+	100% {
+		transform: scale(1.68);
+		border: 1px solid rgba(30, 96, 163, 0);
+		background-color: rgba(30, 96, 163, 0);
+		opacity: 0;
+	}
+}
+
+@keyframes cta-radar-white {
+	0% {
+		transform: scale(0.96);
+		border: 2px solid rgba(255, 255, 255, 0.9);
+		background-color: rgba(255, 255, 255, 0.35);
+		opacity: 0.95;
+	}
+	100% {
+		transform: scale(1.68);
+		border: 1px solid rgba(255, 255, 255, 0);
+		background-color: rgba(255, 255, 255, 0);
+		opacity: 0;
+	}
+}
+
+@keyframes cta-phone-ring {
+	0%, 100% {
+		transform: rotate(0deg) scale(1);
+	}
+	3%, 9%, 15% {
+		transform: rotate(-16deg) scale(1.1);
+	}
+	6%, 12%, 18% {
+		transform: rotate(16deg) scale(1.1);
+	}
+	21% {
+		transform: rotate(0deg) scale(1);
+	}
+}
+
+@keyframes cta-beacon-pulse {
+	0%, 100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.05);
 	}
 }
 
