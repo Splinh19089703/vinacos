@@ -167,20 +167,48 @@ foreach ( $depts as $d ) {
 	}
 }
 ?>
+<style>
+html body.page-template-template-page-about .about-5-section.section-t-large,
+html body.page-template-template-page-about-php .about-5-section.section-t-large,
+html body.page-id-942 .about-5-section.section-t-large,
+html body.page-id-1052 .about-5-section.section-t-large,
+html body.page-id-936 .about-5-section.section-t-large,
+html body .about-5-section.section-t-large {
+	height: auto !important;
+	min-height: 0 !important;
+	max-height: none !important;
+	overflow: visible !important;
+	padding: clamp(44px, 5.5vh, 72px) 0 !important;
+}
+html body.page-template-template-page-about .about-5-section .image.text-center img,
+html body.page-template-template-page-about-php .about-5-section .image.text-center img,
+html body.page-id-942 .about-5-section .image.text-center img,
+html body.page-id-1052 .about-5-section .image.text-center img,
+html body.page-id-936 .about-5-section .image.text-center img,
+html body .about-5-section .image.text-center img {
+	width: 100% !important;
+	max-width: 1100px !important;
+	height: auto !important;
+	max-height: none !important;
+	object-fit: contain !important;
+	border-radius: 14px !important;
+	display: block !important;
+}
+</style>
 <section class="about-5-section section-t-large">
 	<div class="container">
 		<?php if ( '' !== trim( $title ) ) : ?>
-			<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+			<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
 				<?php echo esc_html( $title ); ?>
 			</h2>
 		<?php endif; ?>
 		<?php if ( '' !== $banner_img ) : ?>
-			<div class="image text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
-				<img class="lozad" src="<?php echo esc_url( $banner_img ); ?>" data-src="<?php echo esc_url( $banner_img ); ?>" loading="lazy" alt="<?php echo esc_attr( '' !== trim( $title ) ? $title : 'Sức Mạnh Tập Thể VINACOS' ); ?>">
+			<div class="image text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+				<img class="lozad" src="<?php echo esc_url( $banner_img ); ?>" data-src="<?php echo esc_url( $banner_img ); ?>" width="1024" height="208" loading="lazy" alt="<?php echo esc_attr( '' !== trim( $title ) ? $title : 'Sức Mạnh Tập Thể VINACOS' ); ?>">
 			</div>
 		<?php endif; ?>
 		<?php if ( ! empty( $depts ) ) : ?>
-			<div class="swiper-relative about-5-list is-page" data-aos="fade-up" data-aos-duration="700" data-aos-delay="1300">
+			<div class="swiper-relative about-5-list is-page" data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
 				<?php if ( $any_dept_image ) : ?>
 					<div class="swiper about-5-image">
 						<div class="swiper-wrapper">

@@ -632,6 +632,229 @@ function spl_maybe_rescue_936_factory_edits_to_942(): void {
 	}
 }
 
+add_action( 'wp_loaded', 'spl_maybe_sync_942_images_to_1052', 22 );
+
+/**
+ * Resolve or create the English Polylang media translation ID when `media_support` is active,
+ * falling back cleanly to the original attachment ID.
+ */
+function spl_resolve_about_en_media_id( int $attachment_id ): int {
+	if ( $attachment_id <= 0 ) {
+		return 0;
+	}
+
+	if ( function_exists( 'PLL' ) && ! empty( \PLL()->options['media_support'] ) && function_exists( 'pll_get_post' ) ) {
+		$tr_id = (int) pll_get_post( $attachment_id, 'en' );
+		if ( $tr_id <= 0 && isset( \PLL()->model->post ) && method_exists( \PLL()->model, 'get_language' ) && method_exists( \PLL()->model->post, 'create_media_translation' ) ) {
+			$en_lang = \PLL()->model->get_language( 'en' );
+			if ( $en_lang ) {
+				$tr_id = (int) \PLL()->model->post->create_media_translation( $attachment_id, $en_lang );
+			}
+		}
+		if ( $tr_id > 0 ) {
+			return $tr_id;
+		}
+	}
+
+	return $attachment_id;
+}
+
+/**
+ * Check whether an English image slot still holds an empty value or static seed placeholder
+ * while Vietnamese page 942 holds a newer real attachment.
+ *
+ * @param int           $vi_aid         Vietnamese attachment ID.
+ * @param int           $en_aid         Current English attachment ID.
+ * @param array<string> $seed_basenames Static seed filenames.
+ */
+function spl_should_sync_en_image_slot( int $vi_aid, int $en_aid, array $seed_basenames ): bool {
+	if ( $vi_aid <= 0 ) {
+		return false;
+	}
+
+	$vi_file = (string) get_post_meta( $vi_aid, '_wp_attached_file', true );
+	if ( '' === $vi_file ) {
+		return false;
+	}
+
+	if ( $en_aid <= 0 ) {
+		return true;
+	}
+
+	$en_file = (string) get_post_meta( $en_aid, '_wp_attached_file', true );
+	if ( $vi_file === $en_file ) {
+		return false;
+	}
+
+	return '' === $en_file || in_array( wp_basename( $en_file ), $seed_basenames, true );
+}
+
+/**
+ * One-time non-destructive image sync from active Vietnamese About page (ID 942)
+ * to English About page (ID 1052). Preserves 100% of English text copy and never
+ * sets any existing media field to 0 or empty string.
+ */
+function spl_maybe_sync_942_images_to_1052(): void {
+	if ( '1' !== get_option( 'spl_about_acf_synced_v2' ) || '1' === get_option( 'spl_about_acf_synced_v4' ) ) {
+		return;
+	}
+
+	if ( wp_installing() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		return;
+	}
+
+	if ( ! function_exists( 'get_field' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+
+	if ( false !== get_transient( 'spl_about_acf_sync_v4_lock' ) ) {
+		return;
+	}
+	set_transient( 'spl_about_acf_sync_v4_lock', '1', 60 );
+
+	$had_pll_filter = false;
+	if ( class_exists( Dispatcher::class ) && false !== has_filter( 'acf/update_value', [ Dispatcher::class, 'update' ] ) ) {
+		remove_filter( 'acf/update_value', [ Dispatcher::class, 'update' ], 5 );
+		$had_pll_filter = true;
+	}
+
+	try {
+		$rows_942  = get_field( 'about_sections', 942 );
+		$rows_1052 = get_field( 'about_sections', 1052 );
+
+		if ( is_array( $rows_942 ) && is_array( $rows_1052 ) ) {
+			$seed_basenames = [
+				'banner-about.webp',
+				'bg-story-shape.png',
+				'bg-tam-the-cong-su.webp',
+				'icon-hop-tac.png',
+				'icon-trung-thuc.png',
+				'icon-xuat-sac.png',
+				'suc-manh-tap-the-vinacos.png',
+				'ceo-founder.jpg',
+				'team-rd.jpg',
+				'team-production.jpg',
+				'team-qa.jpg',
+				'team-office.jpg',
+				'research-process.jpg',
+				'factory-overview.jpg',
+				'rd-lab-main.jpg',
+				'cleanroom-factory.jpg',
+			];
+
+			$vi_by_layout = [];
+			foreach ( $rows_942 as $r942 ) {
+				if ( is_array( $r942 ) && ! empty( $r942['acf_fc_layout'] ) ) {
+					$lk = (string) $r942['acf_fc_layout'];
+					if ( ! isset( $vi_by_layout[ $lk ] ) ) {
+						$vi_by_layout[ $lk ] = $r942;
+					}
+				}
+			}
+
+			$updated_1052 = false;
+
+			foreach ( $rows_1052 as $idx => $r1052 ) {
+				if ( ! is_array( $r1052 ) || empty( $r1052['acf_fc_layout'] ) ) {
+					continue;
+				}
+				$lk  = (string) $r1052['acf_fc_layout'];
+				$rvi = $vi_by_layout[ $lk ] ?? null;
+
+				if ( 'about_hero' === $lk ) {
+					foreach ( [ 'banner_image', 'banner_image_mobile' ] as $img_key ) {
+						$en_aid = spl_resolve_about_attachment_id( $r1052[ $img_key ] ?? 0, 0 );
+						$vi_aid = is_array( $rvi ) ? spl_resolve_about_attachment_id( $rvi[ $img_key ] ?? 0, 0 ) : 0;
+						if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+							$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+							$updated_1052 = true;
+						}
+						$rows_1052[ $idx ][ $img_key ] = $en_aid > 0 ? $en_aid : '';
+					}
+				} elseif ( 'about_story' === $lk ) {
+					$en_aid = spl_resolve_about_attachment_id( $r1052['shape_bg'] ?? 0, 0 );
+					$vi_aid = is_array( $rvi ) ? spl_resolve_about_attachment_id( $rvi['shape_bg'] ?? 0, 0 ) : 0;
+					if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+						$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+						$updated_1052 = true;
+					}
+					$rows_1052[ $idx ]['shape_bg'] = $en_aid > 0 ? $en_aid : '';
+				} elseif ( 'about_message' === $lk ) {
+					foreach ( [ 'bg_image', 'side_image' ] as $img_key ) {
+						$en_aid = spl_resolve_about_attachment_id( $r1052[ $img_key ] ?? 0, 0 );
+						$vi_aid = is_array( $rvi ) ? spl_resolve_about_attachment_id( $rvi[ $img_key ] ?? 0, 0 ) : 0;
+						if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+							$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+							$updated_1052 = true;
+						}
+						$rows_1052[ $idx ][ $img_key ] = $en_aid > 0 ? $en_aid : '';
+					}
+				} elseif ( 'about_promises' === $lk && ! empty( $r1052['promise_items'] ) && is_array( $r1052['promise_items'] ) ) {
+					$vi_items = ( is_array( $rvi ) && is_array( $rvi['promise_items'] ?? null ) ) ? array_values( $rvi['promise_items'] ) : [];
+					$en_items = array_values( $r1052['promise_items'] );
+					foreach ( $en_items as $i => $it_en ) {
+						$en_aid = spl_resolve_about_attachment_id( $it_en['icon'] ?? 0, 0 );
+						$vi_aid = isset( $vi_items[ $i ] ) ? spl_resolve_about_attachment_id( $vi_items[ $i ]['icon'] ?? 0, 0 ) : 0;
+						if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+							$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+							$updated_1052 = true;
+						}
+						$en_items[ $i ]['icon'] = $en_aid > 0 ? $en_aid : '';
+					}
+					$rows_1052[ $idx ]['promise_items'] = $en_items;
+				} elseif ( 'about_team' === $lk ) {
+					$en_banner = spl_resolve_about_attachment_id( $r1052['banner_image'] ?? 0, 0 );
+					$vi_banner = is_array( $rvi ) ? spl_resolve_about_attachment_id( $rvi['banner_image'] ?? 0, 0 ) : 0;
+					if ( spl_should_sync_en_image_slot( $vi_banner, $en_banner, $seed_basenames ) ) {
+						$en_banner    = spl_resolve_about_en_media_id( $vi_banner );
+						$updated_1052 = true;
+					}
+					$rows_1052[ $idx ]['banner_image'] = $en_banner > 0 ? $en_banner : '';
+
+					if ( ! empty( $r1052['team_items'] ) && is_array( $r1052['team_items'] ) ) {
+						$vi_items = ( is_array( $rvi ) && is_array( $rvi['team_items'] ?? null ) ) ? array_values( $rvi['team_items'] ) : [];
+						$en_items = array_values( $r1052['team_items'] );
+						foreach ( $en_items as $i => $it_en ) {
+							$en_aid = spl_resolve_about_attachment_id( $it_en['image'] ?? 0, 0 );
+							$vi_aid = isset( $vi_items[ $i ] ) ? spl_resolve_about_attachment_id( $vi_items[ $i ]['image'] ?? 0, 0 ) : 0;
+							if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+								$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+								$updated_1052 = true;
+							}
+							$en_items[ $i ]['image'] = $en_aid > 0 ? $en_aid : '';
+						}
+						$rows_1052[ $idx ]['team_items'] = $en_items;
+					}
+				} elseif ( 'about_cta' === $lk && ! empty( $r1052['factory_items'] ) && is_array( $r1052['factory_items'] ) ) {
+					$vi_items = ( is_array( $rvi ) && is_array( $rvi['factory_items'] ?? null ) ) ? array_values( $rvi['factory_items'] ) : [];
+					$en_items = array_values( $r1052['factory_items'] );
+					foreach ( $en_items as $i => $it_en ) {
+						$en_aid = spl_resolve_about_attachment_id( $it_en['image'] ?? 0, 0 );
+						$vi_aid = isset( $vi_items[ $i ] ) ? spl_resolve_about_attachment_id( $vi_items[ $i ]['image'] ?? 0, 0 ) : 0;
+						if ( spl_should_sync_en_image_slot( $vi_aid, $en_aid, $seed_basenames ) ) {
+							$en_aid       = spl_resolve_about_en_media_id( $vi_aid );
+							$updated_1052 = true;
+						}
+						$en_items[ $i ]['image'] = $en_aid > 0 ? $en_aid : '';
+					}
+					$rows_1052[ $idx ]['factory_items'] = $en_items;
+				}
+			}
+
+			if ( $updated_1052 ) {
+				update_field( 'field_vinacos_about_fc', $rows_1052, 1052 );
+			}
+		}
+
+		update_option( 'spl_about_acf_synced_v4', '1', true );
+	} finally {
+		delete_transient( 'spl_about_acf_sync_v4_lock' );
+		if ( $had_pll_filter ) {
+			add_filter( 'acf/update_value', [ Dispatcher::class, 'update' ], 5, 3 );
+		}
+	}
+}
+
 add_filter( 'display_post_states', 'spl_about_admin_post_states', 20, 2 );
 
 /**
