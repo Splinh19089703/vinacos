@@ -106,19 +106,61 @@ foreach ( $slides as $sl ) {
 	}
 }
 ?>
+<style>
+html body.page-template-template-page-about .about-6-section.section-large,
+html body.page-id-942 .about-6-section.section-large,
+html body.page-id-936 .about-6-section.section-large,
+html body .about-6-section.section-large {
+	height: auto !important;
+	min-height: 0 !important;
+	max-height: none !important;
+	overflow: visible !important;
+	padding: clamp(44px, 5.5vh, 72px) 0 !important;
+}
+html body.page-template-template-page-about .about-6-section .about-6-wrap,
+html body .about-6-section .about-6-wrap {
+	width: 100% !important;
+	max-width: 1060px !important;
+	margin: 0 auto !important;
+}
+html body .about-6-section .about-6-image .image img,
+html body .about-6-section .about-6-image .swiper-slide .image img {
+	--tw-grayscale: grayscale(0) !important;
+	filter: none !important;
+}
+html body .about-6-section .swiper-button .button-prev,
+html body .about-6-section .swiper-button .button-next {
+	width: 42px !important;
+	height: 42px !important;
+	border-radius: 50% !important;
+	background: #f1f5f9 !important;
+	color: #1e60a3 !important;
+	border: none !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	cursor: pointer !important;
+	transition: all 0.25s ease !important;
+}
+html body .about-6-section .swiper-button .button-prev:hover,
+html body .about-6-section .swiper-button .button-next:hover {
+	background: #1e60a3 !important;
+	color: #ffffff !important;
+}
+</style>
 <section class="about-6-section section-large">
 	<div class="container">
 		<div class="about-6-wrap">
 			<div class="right">
 				<?php if ( '' !== trim( $title ) ) : ?>
-					<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+					<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
 						<?php echo esc_html( $title ); ?>
 					</h2>
 				<?php endif; ?>
 				<?php if ( ! empty( $slides ) ) : ?>
 					<div class="swiper-relative mt-10 is-page">
 						<?php if ( $any_slide_image ) : ?>
-							<div class="swiper about-6-image" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
+							<div class="swiper about-6-image" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
 								<div class="swiper-wrapper">
 									<?php foreach ( $slides as $slide ) : ?>
 										<div class="swiper-slide">
@@ -147,7 +189,7 @@ foreach ( $slides as $sl ) {
 							</div>
 						</div>
 						<div class="desktop-only mt-10">
-							<div class="swiper-button" data-aos="fade-up" data-aos-duration="700" data-aos-delay="1300">
+							<div class="swiper-button" data-aos="fade-up" data-aos-duration="700" data-aos-delay="250">
 								<div class="button-prev"><?= spl_icon( 'chevron-left', '', 20 ) ?></div>
 								<div class="button-next"><?= spl_icon( 'chevron-right', '', 20 ) ?></div>
 							</div>
