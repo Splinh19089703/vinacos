@@ -12,14 +12,25 @@ defined( 'ABSPATH' ) || exit;
 $is_en          = function_exists( 'pll_current_language' ) && 'en' === pll_current_language();
 $section        = is_array( $args ?? null ) ? $args : [];
 $is_synced      = ( '1' === get_option( 'spl_about_acf_synced_v2' ) );
-$title          = ( $is_synced && ! empty( $section['title'] ) )
-	? (string) $section['title']
-	: ( $is_en ? 'Collective Strength & Team' : 'Sức mạnh tập thể' );
+$has_acf        = $is_synced && ! empty( $section );
 $img_dir        = get_template_directory_uri() . '/static/img/vinacos/';
 $default_banner = get_template_directory_uri() . '/static/img/suc-manh-tap-the-vinacos.png';
-$banner_img     = function_exists( 'spl_get_image_url' )
-	? spl_get_image_url( $section['banner_image'] ?? null, $default_banner )
-	: $default_banner;
+
+if ( $has_acf && array_key_exists( 'title', $section ) ) {
+	$title = (string) $section['title'];
+} else {
+	$title = ( $is_synced && ! empty( $section['title'] ) )
+		? (string) $section['title']
+		: ( $is_en ? 'Collective Strength & Team' : 'Sức mạnh tập thể' );
+}
+
+if ( $has_acf && array_key_exists( 'banner_image', $section ) ) {
+	$banner_img = function_exists( 'spl_get_image_url' ) ? spl_get_image_url( $section['banner_image'] ) : '';
+} else {
+	$banner_img = function_exists( 'spl_get_image_url' )
+		? spl_get_image_url( $section['banner_image'] ?? null, $default_banner )
+		: $default_banner;
+}
 
 $default_depts = $is_en ? [
 	[
@@ -107,70 +118,120 @@ $default_depts = $is_en ? [
 
 $depts     = [];
 $raw_items = $section['team_items'] ?? [];
-if ( ! empty( $raw_items ) && is_array( $raw_items ) ) {
-	$has_custom_images = false;
-	foreach ( $raw_items as $r ) {
-		if ( ! empty( $r['image'] ) ) {
-			$has_custom_images = true;
-			break;
-		}
-	}
-	if ( $is_synced || $has_custom_images ) {
-		foreach ( array_values( $raw_items ) as $i => $row ) {
-			$fallback_img = $default_depts[ $i % count( $default_depts ) ]['image'];
-			$img_url      = function_exists( 'spl_get_image_url' )
-				? spl_get_image_url( $row['image'] ?? null, $fallback_img )
-				: $fallback_img;
-			$depts[]      = [
+if ( $has_acf && array_key_exists( 'team_items', $section ) ) {
+	if ( is_array( $raw_items ) ) {
+		foreach ( array_values( $raw_items ) as $row ) {
+			$img_url = function_exists( 'spl_get_image_url' )
+				? spl_get_image_url( $row['image'] ?? null )
+				: '';
+			$depts[] = [
 				'title' => (string) ( $row['name'] ?? $row['title'] ?? '' ),
 				'desc'  => (string) ( $row['desc'] ?? '' ),
 				'image' => $img_url,
 			];
 		}
 	}
+} else {
+	if ( ! empty( $raw_items ) && is_array( $raw_items ) ) {
+		$has_custom_images = false;
+		foreach ( $raw_items as $r ) {
+			if ( ! empty( $r['image'] ) ) {
+				$has_custom_images = true;
+				break;
+			}
+		}
+		if ( $is_synced || $has_custom_images ) {
+			foreach ( array_values( $raw_items ) as $i => $row ) {
+				$fallback_img = $default_depts[ $i % count( $default_depts ) ]['image'];
+				$img_url      = function_exists( 'spl_get_image_url' )
+					? spl_get_image_url( $row['image'] ?? null, $fallback_img )
+					: $fallback_img;
+				$depts[]      = [
+					'title' => (string) ( $row['name'] ?? $row['title'] ?? '' ),
+					'desc'  => (string) ( $row['desc'] ?? '' ),
+					'image' => $img_url,
+				];
+			}
+		}
+	}
+	if ( empty( $depts ) ) {
+		$depts = $default_depts;
+	}
 }
-if ( empty( $depts ) ) {
-	$depts = $default_depts;
+
+$any_dept_image = false;
+foreach ( $depts as $d ) {
+	if ( '' !== $d['image'] ) {
+		$any_dept_image = true;
+		break;
+	}
 }
 ?>
 <section class="about-5-section section-t-large">
 	<div class="container">
-		<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
-			<?php echo esc_html( $title ); ?>
-		</h2>
-		<div class="image text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
-			<img class="lozad" src="<?php echo esc_url( $banner_img ); ?>" data-src="<?php echo esc_url( $banner_img ); ?>" loading="lazy" alt="Sức Mạnh Tập Thể VINACOS">
-		</div>
-		<div class="swiper-relative about-5-list is-page" data-aos="fade-up" data-aos-duration="700" data-aos-delay="1300">
-			<div class="swiper about-5-image">
-				<div class="swiper-wrapper">
-					<?php foreach ( $depts as $dept ) : ?>
-						<div class="swiper-slide">
-							<div class="image img-cover">
-								<img class="lozad" src="<?php echo esc_url( $dept['image'] ); ?>" data-src="<?php echo esc_url( $dept['image'] ); ?>" loading="lazy" alt="<?php echo esc_attr( $dept['title'] ); ?>">
-							</div>
+		<?php if ( '' !== trim( $title ) ) : ?>
+			<h2 class="site-title text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
+				<?php echo esc_html( $title ); ?>
+			</h2>
+		<?php endif; ?>
+		<?php if ( '' !== $banner_img ) : ?>
+			<div class="image text-center" data-aos="fade-up" data-aos-duration="700" data-aos-delay="800">
+				<img class="lozad" src="<?php echo esc_url( $banner_img ); ?>" data-src="<?php echo esc_url( $banner_img ); ?>" loading="lazy" alt="<?php echo esc_attr( '' !== trim( $title ) ? $title : 'Sức Mạnh Tập Thể VINACOS' ); ?>">
+			</div>
+		<?php endif; ?>
+		<?php if ( ! empty( $depts ) ) : ?>
+			<div class="swiper-relative about-5-list is-page" data-aos="fade-up" data-aos-duration="700" data-aos-delay="1300">
+				<?php if ( $any_dept_image ) : ?>
+					<div class="swiper about-5-image">
+						<div class="swiper-wrapper">
+							<?php foreach ( $depts as $dept ) : ?>
+								<div class="swiper-slide">
+									<div class="image img-cover">
+										<?php if ( '' !== $dept['image'] ) : ?>
+											<img class="lozad" src="<?php echo esc_url( $dept['image'] ); ?>" data-src="<?php echo esc_url( $dept['image'] ); ?>" loading="lazy" alt="<?php echo esc_attr( $dept['title'] ); ?>">
+										<?php endif; ?>
+									</div>
+								</div>
+							<?php endforeach; ?>
 						</div>
-					<?php endforeach; ?>
-				</div>
-			</div>
-			<div class="caption mt-6">
-				<div class="swiper about-5-caption">
-					<div class="swiper-wrapper">
-						<?php foreach ( $depts as $dept ) : ?>
-							<div class="swiper-slide">
-								<h3 class="title"><?php echo esc_html( $dept['title'] ); ?></h3>
-								<div class="desc"><?php echo wp_kses_post( nl2br( esc_html( $dept['desc'] ) ) ); ?></div>
-							</div>
-						<?php endforeach; ?>
+					</div>
+				<?php endif; ?>
+				<div class="caption mt-6">
+					<div class="swiper about-5-caption">
+						<div class="swiper-wrapper">
+							<?php foreach ( $depts as $dept ) : ?>
+								<div class="swiper-slide">
+									<?php if ( '' !== trim( $dept['title'] ) ) : ?>
+										<h3 class="title"><?php echo esc_html( $dept['title'] ); ?></h3>
+									<?php endif; ?>
+									<?php if ( '' !== trim( $dept['desc'] ) ) : ?>
+										<div class="desc"><?php echo wp_kses_post( nl2br( esc_html( $dept['desc'] ) ) ); ?></div>
+									<?php endif; ?>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
+					<div class="desktop-only mt-8">
+						<div class="swiper-button">
+							<div class="button-prev"><?= spl_icon( 'chevron-left', '', 20 ) ?></div>
+							<div class="button-next"><?= spl_icon( 'chevron-right', '', 20 ) ?></div>
+						</div>
 					</div>
 				</div>
-				<div class="desktop-only mt-8">
-					<div class="swiper-button">
-						<div class="button-prev"><?= spl_icon( 'chevron-left', '', 20 ) ?></div>
-						<div class="button-next"><?= spl_icon( 'chevron-right', '', 20 ) ?></div>
-					</div>
-				</div>
 			</div>
-		</div>
+			<?php if ( ! $any_dept_image ) : ?>
+				<script>
+				document.addEventListener('DOMContentLoaded', function () {
+					var sec = document.querySelector('.about-5-section');
+					var capEl = sec && sec.querySelector('.about-5-caption');
+					if (!sec || !capEl) return;
+					var prev = sec.querySelector('.button-prev');
+					var next = sec.querySelector('.button-next');
+					if (prev) prev.addEventListener('click', function () { if (capEl.swiper) capEl.swiper.slidePrev(); });
+					if (next) next.addEventListener('click', function () { if (capEl.swiper) capEl.swiper.slideNext(); });
+				});
+				</script>
+			<?php endif; ?>
+		<?php endif; ?>
 	</div>
 </section>

@@ -527,3 +527,179 @@ function spl_sync_single_about_page_acf( int $post_id, array $media_map ): void 
 
 	update_field( 'field_vinacos_about_fc', $synced_rows, $post_id );
 }
+
+add_action( 'wp_loaded', 'spl_maybe_rescue_936_factory_edits_to_942', 21 );
+
+/**
+ * One-time non-destructive rescue: if user uploaded/selected new factory images on duplicate
+ * page 936 ("Giới Thiệu") while active menu page 942 ("Về chúng tôi") still holds the static
+ * seeded defaults, copy those positive attachment IDs & slide texts onto 942.
+ * Never overwrites any custom media ID with 0 or empty string.
+ */
+function spl_maybe_rescue_936_factory_edits_to_942(): void {
+	if ( '1' !== get_option( 'spl_about_acf_synced_v2' ) || '1' === get_option( 'spl_about_acf_synced_v3' ) ) {
+		return;
+	}
+
+	if ( wp_installing() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		return;
+	}
+
+	if ( ! function_exists( 'get_field' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+
+	$had_pll_filter = false;
+	if ( class_exists( Dispatcher::class ) && false !== has_filter( 'acf/update_value', [ Dispatcher::class, 'update' ] ) ) {
+		remove_filter( 'acf/update_value', [ Dispatcher::class, 'update' ], 5 );
+		$had_pll_filter = true;
+	}
+
+	try {
+		$rows_942 = get_field( 'about_sections', 942 );
+		$rows_936 = get_field( 'about_sections', 936 );
+
+		if ( is_array( $rows_942 ) && is_array( $rows_936 ) ) {
+			$cta_936 = null;
+			foreach ( $rows_936 as $r ) {
+				if ( is_array( $r ) && 'about_cta' === ( $r['acf_fc_layout'] ?? '' ) && ! empty( $r['factory_items'] ) && is_array( $r['factory_items'] ) ) {
+					$cta_936 = $r;
+					break;
+				}
+			}
+
+			if ( null !== $cta_936 ) {
+				$seed_basenames = [ 'factory-overview.jpg', 'rd-lab-main.jpg', 'cleanroom-factory.jpg' ];
+				$updated_942    = false;
+
+				foreach ( $rows_942 as $idx => $r942 ) {
+					if ( ! is_array( $r942 ) || 'about_cta' !== ( $r942['acf_fc_layout'] ?? '' ) ) {
+						continue;
+					}
+
+					$items_942      = is_array( $r942['factory_items'] ?? null ) ? array_values( $r942['factory_items'] ) : [];
+					$all_942_seeded = true;
+					foreach ( $items_942 as $it ) {
+						$aid  = spl_resolve_about_attachment_id( $it['image'] ?? 0, 0 );
+						$file = $aid > 0 ? (string) get_post_meta( $aid, '_wp_attached_file', true ) : '';
+						if ( '' !== $file && ! in_array( wp_basename( $file ), $seed_basenames, true ) ) {
+							$all_942_seeded = false;
+							break;
+						}
+					}
+
+					if ( $all_942_seeded ) {
+						$merged_items    = [];
+						$has_custom_936  = false;
+						$items_936_clean = array_values( $cta_936['factory_items'] );
+
+						foreach ( $items_936_clean as $i => $it936 ) {
+							$fallback_942_id = spl_resolve_about_attachment_id( $items_942[ $i ]['image'] ?? 0, 0 );
+							$aid_936         = spl_resolve_about_attachment_id( $it936['image'] ?? 0, $fallback_942_id );
+							$file_936        = $aid_936 > 0 ? (string) get_post_meta( $aid_936, '_wp_attached_file', true ) : '';
+							if ( '' !== $file_936 && ! in_array( wp_basename( $file_936 ), $seed_basenames, true ) ) {
+								$has_custom_936 = true;
+							}
+							$merged_items[] = [
+								'image' => $aid_936 > 0 ? $aid_936 : '',
+								'title' => (string) ( $it936['title'] ?? ( $items_942[ $i ]['title'] ?? '' ) ),
+								'desc'  => (string) ( $it936['desc'] ?? ( $items_942[ $i ]['desc'] ?? '' ) ),
+							];
+						}
+
+						if ( $has_custom_936 && ! empty( $merged_items ) ) {
+							$rows_942[ $idx ]['factory_items'] = $merged_items;
+							if ( ! empty( $cta_936['title'] ) ) {
+								$rows_942[ $idx ]['title'] = (string) $cta_936['title'];
+							}
+							$updated_942 = true;
+						}
+					}
+					break;
+				}
+
+				if ( $updated_942 ) {
+					update_field( 'field_vinacos_about_fc', $rows_942, 942 );
+				}
+			}
+		}
+
+		update_option( 'spl_about_acf_synced_v3', '1', true );
+	} finally {
+		if ( $had_pll_filter ) {
+			add_filter( 'acf/update_value', [ Dispatcher::class, 'update' ], 5, 3 );
+		}
+	}
+}
+
+add_filter( 'display_post_states', 'spl_about_admin_post_states', 20, 2 );
+
+/**
+ * Clarify active vs duplicate About pages in WP-Admin -> Pages list.
+ *
+ * @param array<string,string> $post_states Existing post states.
+ * @param WP_Post              $post        Current post object.
+ * @return array<string,string>
+ */
+function spl_about_admin_post_states( array $post_states, $post ): array {
+	if ( ! $post instanceof WP_Post || 'page' !== $post->post_type ) {
+		return $post_states;
+	}
+
+	if ( 942 === (int) $post->ID ) {
+		$post_states['spl_about_active'] = 'Trang Giới thiệu chính (Menu Web)';
+	} elseif ( 1052 === (int) $post->ID ) {
+		$post_states['spl_about_en'] = 'About Us chính (EN)';
+	} elseif ( 936 === (int) $post->ID ) {
+		$post_states['spl_about_legacy'] = 'Bản cũ trùng lặp — Không gắn Menu';
+	}
+
+	return $post_states;
+}
+
+add_action( 'admin_notices', 'spl_about_admin_helper_notices' );
+
+/**
+ * Provide 1-click navigation in WP-Admin so editors never confuse legacy post 936 with active post 942.
+ */
+function spl_about_admin_helper_notices(): void {
+	if ( ! is_admin() || ! current_user_can( 'edit_pages' ) || ! function_exists( 'get_current_screen' ) ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if ( ! $screen || 'page' !== $screen->post_type ) {
+		return;
+	}
+
+	$edit_942 = admin_url( 'post.php?post=942&action=edit' );
+	$edit_en  = admin_url( 'post.php?post=1052&action=edit' );
+	$view_942 = get_permalink( 942 ) ?: home_url( '/ve-chung-toi/' );
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$current_post_id = isset( $_GET['post'] ) ? (int) $_GET['post'] : 0;
+
+	if ( 'post' === $screen->base && 936 === $current_post_id ) {
+		printf(
+			'<div class="notice notice-warning" style="border-left-width:4px;padding:12px 16px;">' .
+			'<p style="margin:0 0 8px;font-size:14px;"><strong>⚠️ Chú ý:</strong> Trang <strong>"Giới Thiệu" (ID 936 — <code>/gioi-thieu/</code>)</strong> này là bản cũ trùng lặp, <strong>không gắn trên Menu website</strong>. Sửa tại đây sẽ không hiển thị ngoài trang <code>/ve-chung-toi/</code>.</p>' .
+			'<p style="margin:0;"><a class="button button-primary" href="%s">Mở trang "Về chúng tôi" (ID 942) đang chạy ngoài website →</a> <a class="button" href="%s" target="_blank" rel="noopener">Xem ngoài web (/ve-chung-toi/)</a></p>' .
+			'</div>',
+			esc_url( $edit_942 ),
+			esc_url( $view_942 )
+		);
+		return;
+	}
+
+	if ( 'edit' === $screen->base ) {
+		printf(
+			'<div class="notice notice-info is-dismissible" style="padding:10px 14px;">' .
+			'<p style="margin:0;">💡 <strong>Truy cập nhanh Trang Giới Thiệu đang chạy trên Menu:</strong> ' .
+			'<a class="button button-small button-primary" style="margin-left:6px;vertical-align:baseline;" href="%s">Sửa Về chúng tôi (Tiếng Việt — ID 942)</a> ' .
+			'<a class="button button-small" style="margin-left:4px;vertical-align:baseline;" href="%s">Sửa About Us (English — ID 1052)</a></p>' .
+			'</div>',
+			esc_url( $edit_942 ),
+			esc_url( $edit_en )
+		);
+	}
+}
