@@ -50,21 +50,18 @@ if ( empty( $raw_title ) ) {
 }
 
 // Custom background image override or default to Slide 18 clean asset
-$custom_bg_id = $section['image'] ?? 0;
-$bg_url       = '';
-if ( ! empty( $custom_bg_id ) ) {
-	$bg_url = is_numeric( $custom_bg_id ) ? wp_get_attachment_image_url( (int) $custom_bg_id, 'full' ) : (string) $custom_bg_id;
-}
+$default_bg = get_template_directory_uri() . '/static/img/vinacos/bg-tam-the-cong-su.webp';
+$bg_url     = function_exists( 'spl_get_image_url' )
+	? spl_get_image_url( $section['image'] ?? null, $default_bg )
+	: ( ! empty( $section['image'] ) && is_numeric( $section['image'] ) ? (string) wp_get_attachment_image_url( (int) $section['image'], 'full' ) : $default_bg );
 if ( empty( $bg_url ) ) {
-	$bg_url = get_template_directory_uri() . '/static/img/vinacos/bg-tam-the-cong-su.webp';
+	$bg_url = $default_bg;
 }
 
 // Custom mobile image override for About message section
-$custom_mobi_id = $section['image_mobile'] ?? 0;
-$bg_mobi_url    = '';
-if ( ! empty( $custom_mobi_id ) ) {
-	$bg_mobi_url = is_numeric( $custom_mobi_id ) ? wp_get_attachment_image_url( (int) $custom_mobi_id, 'full' ) : (string) $custom_mobi_id;
-}
+$bg_mobi_url = function_exists( 'spl_get_image_url' )
+	? spl_get_image_url( $section['image_mobile'] ?? null, $bg_url )
+	: ( ! empty( $section['image_mobile'] ) && is_numeric( $section['image_mobile'] ) ? (string) wp_get_attachment_image_url( (int) $section['image_mobile'], 'full' ) : $bg_url );
 if ( empty( $bg_mobi_url ) ) {
 	$bg_mobi_url = $bg_url;
 }

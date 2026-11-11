@@ -9,11 +9,19 @@ use SPL\Core\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-$is_en      = function_exists( 'pll_current_language' ) && 'en' === pll_current_language();
-$title      = ! empty( $data['title'] ) ? $data['title'] : ( $is_en ? 'Collective Strength & Team' : 'Sức mạnh tập thể' );
-$img_dir    = get_template_directory_uri() . '/static/img/vinacos/';
-$banner_img = get_template_directory_uri() . '/static/img/suc-manh-tap-the-vinacos.png';
-$depts      = $is_en ? [
+$is_en          = function_exists( 'pll_current_language' ) && 'en' === pll_current_language();
+$section        = is_array( $args ?? null ) ? $args : [];
+$is_synced      = ( '1' === get_option( 'spl_about_acf_synced_v2' ) );
+$title          = ( $is_synced && ! empty( $section['title'] ) )
+	? (string) $section['title']
+	: ( $is_en ? 'Collective Strength & Team' : 'Sức mạnh tập thể' );
+$img_dir        = get_template_directory_uri() . '/static/img/vinacos/';
+$default_banner = get_template_directory_uri() . '/static/img/suc-manh-tap-the-vinacos.png';
+$banner_img     = function_exists( 'spl_get_image_url' )
+	? spl_get_image_url( $section['banner_image'] ?? null, $default_banner )
+	: $default_banner;
+
+$default_depts = $is_en ? [
 	[
 		'title' => 'EXECUTIVE BOARD & LEADERSHIP',
 		'desc'  => 'Guiding vision, steering strategy, and fostering a culture of dedication across the organization.',
@@ -96,6 +104,34 @@ $depts      = $is_en ? [
 		'image' => $img_dir . 'research-process.jpg',
 	],
 ];
+
+$depts     = [];
+$raw_items = $section['team_items'] ?? [];
+if ( ! empty( $raw_items ) && is_array( $raw_items ) ) {
+	$has_custom_images = false;
+	foreach ( $raw_items as $r ) {
+		if ( ! empty( $r['image'] ) ) {
+			$has_custom_images = true;
+			break;
+		}
+	}
+	if ( $is_synced || $has_custom_images ) {
+		foreach ( array_values( $raw_items ) as $i => $row ) {
+			$fallback_img = $default_depts[ $i % count( $default_depts ) ]['image'];
+			$img_url      = function_exists( 'spl_get_image_url' )
+				? spl_get_image_url( $row['image'] ?? null, $fallback_img )
+				: $fallback_img;
+			$depts[]      = [
+				'title' => (string) ( $row['name'] ?? $row['title'] ?? '' ),
+				'desc'  => (string) ( $row['desc'] ?? '' ),
+				'image' => $img_url,
+			];
+		}
+	}
+}
+if ( empty( $depts ) ) {
+	$depts = $default_depts;
+}
 ?>
 <section class="about-5-section section-t-large">
 	<div class="container">
@@ -123,7 +159,7 @@ $depts      = $is_en ? [
 						<?php foreach ( $depts as $dept ) : ?>
 							<div class="swiper-slide">
 								<h3 class="title"><?php echo esc_html( $dept['title'] ); ?></h3>
-								<div class="desc"><?php echo esc_html( $dept['desc'] ); ?></div>
+								<div class="desc"><?php echo wp_kses_post( nl2br( esc_html( $dept['desc'] ) ) ); ?></div>
 							</div>
 						<?php endforeach; ?>
 					</div>

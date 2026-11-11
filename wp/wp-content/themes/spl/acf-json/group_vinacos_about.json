@@ -1,8 +1,613 @@
 {
     "key": "group_vinacos_about_page",
-    "title": "VINACOS - Quản Trị Trang Tâm Thế Cộng Sự",
-    "local": "json",
-    "ID": 0,
+    "title": "VINACOS - Quản Trị Trang Về Chúng Tôi (Tâm Thế Cộng Sự)",
+    "fields": [
+        {
+            "key": "field_vinacos_about_fc",
+            "label": "Các Section Trang Về Chúng Tôi",
+            "name": "about_sections",
+            "type": "flexible_content",
+            "instructions": "Chỉnh sửa trực tiếp nội dung, hình ảnh hoặc ẩn/hiện, kéo thả sắp xếp các section hiển thị trên trang Về Chúng Tôi.",
+            "button_label": "Thêm Block Giới Thiệu",
+            "layouts": {
+                "layout_about_hero": {
+                    "key": "layout_about_hero",
+                    "name": "about_hero",
+                    "label": "1. Banner Đầu Trang",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_abh_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_abh_banner",
+                            "label": "Ảnh banner đầu trang (Desktop)",
+                            "name": "banner_image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "large",
+                            "wrapper": {
+                                "width": "40"
+                            }
+                        },
+                        {
+                            "key": "field_abh_banner_mobile",
+                            "label": "Ảnh banner Mobile (Tùy chọn)",
+                            "name": "banner_image_mobile",
+                            "type": "image",
+                            "instructions": "Để trống sẽ tự động dùng ảnh Desktop",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "30"
+                            }
+                        },
+                        {
+                            "key": "field_abh_title",
+                            "label": "Tiêu đề / Alt ảnh Banner",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "Mô tả alt cho ảnh banner (SEO)",
+                            "wrapper": {
+                                "width": "30"
+                            }
+                        }
+                    ]
+                },
+                "layout_about_story": {
+                    "key": "layout_about_story",
+                    "name": "about_story",
+                    "label": "2. Giới Thiệu — Nghiên Cứu Sản Xuất Mỹ Phẩm",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_abs_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_abs_title",
+                            "label": "Tiêu đề khung bên trái",
+                            "name": "title",
+                            "type": "text",
+                            "instructions": "Dùng <br/> để ngắt dòng trên màn hình lớn (VD: NGHIÊN CỨU SẢN XUẤT <br/> MỸ PHẨM)",
+                            "wrapper": {
+                                "width": "55"
+                            }
+                        },
+                        {
+                            "key": "field_abs_image",
+                            "label": "Ảnh nền khung bên trái",
+                            "name": "image",
+                            "type": "image",
+                            "instructions": "Để trống sẽ dùng khung xanh mặc định",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "45"
+                            }
+                        },
+                        {
+                            "key": "field_abs_headline",
+                            "label": "Câu dẫn mở đầu (Headline in đậm)",
+                            "name": "headline",
+                            "type": "textarea",
+                            "rows": 2,
+                            "instructions": "Dòng chữ tiêu đề nổi bật phía trên cột nội dung bên phải"
+                        },
+                        {
+                            "key": "field_abs_blocks",
+                            "label": "Các mục nội dung bên phải (Dẫn đầu, Thấu hiểu...)",
+                            "name": "story_blocks",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm mục nội dung",
+                            "sub_fields": [
+                                {
+                                    "key": "field_abs_block_title",
+                                    "label": "Tiêu đề mục (VD: Dẫn đầu)",
+                                    "name": "block_title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "30"
+                                    }
+                                },
+                                {
+                                    "key": "field_abs_block_desc",
+                                    "label": "Nội dung các đoạn văn",
+                                    "name": "block_desc",
+                                    "type": "textarea",
+                                    "rows": 4,
+                                    "instructions": "Xuống dòng (Enter) để tách thành các đoạn văn riêng",
+                                    "wrapper": {
+                                        "width": "70"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_about_message": {
+                    "key": "layout_about_message",
+                    "name": "about_message",
+                    "label": "3. Thông Điệp Tâm Thế Cộng Sự",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_abm_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_abm_subtitle",
+                            "label": "Tiêu đề phụ / Badge nhỏ (Góc trên)",
+                            "name": "subtitle",
+                            "type": "text",
+                            "instructions": "Dòng chữ nhỏ kế bên icon (VD: Công ty tuyệt vời của bạn)",
+                            "wrapper": {
+                                "width": "40"
+                            }
+                        },
+                        {
+                            "key": "field_abm_title",
+                            "label": "Câu thông điệp chính (Trích dẫn)",
+                            "name": "title",
+                            "type": "textarea",
+                            "rows": 3,
+                            "instructions": "Dùng thẻ <strong>từ_cần_in_đậm</strong> để nhấn mạnh, <br> hoặc xuống dòng để ngắt dòng",
+                            "wrapper": {
+                                "width": "60"
+                            }
+                        },
+                        {
+                            "key": "field_abm_image",
+                            "label": "Ảnh nền Desktop",
+                            "name": "image",
+                            "type": "image",
+                            "instructions": "Ảnh nền toàn khối trên máy tính",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_image_mobile",
+                            "label": "Ảnh hiển thị Mobile",
+                            "name": "image_mobile",
+                            "type": "image",
+                            "instructions": "Ảnh riêng cho điện thoại / máy tính bảng (để trống sẽ dùng ảnh Desktop)",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        }
+                    ]
+                },
+                "layout_about_promises": {
+                    "key": "layout_about_promises",
+                    "name": "about_promises",
+                    "label": "4. Lời Hứa Của BB VINACOS",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_ab_prom_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_ab_prom_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_ab_prom_items",
+                            "label": "Danh sách giá trị / Lời hứa",
+                            "name": "promise_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm giá trị",
+                            "sub_fields": [
+                                {
+                                    "key": "field_ab_prom_icon",
+                                    "label": "Icon (60x60)",
+                                    "name": "icon",
+                                    "type": "image",
+                                    "return_format": "id",
+                                    "preview_size": "thumbnail",
+                                    "wrapper": {
+                                        "width": "25"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_prom_item_title",
+                                    "label": "Tên giá trị (Tag)",
+                                    "name": "title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "30"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_prom_item_desc",
+                                    "label": "Mô tả chi tiết",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 3,
+                                    "wrapper": {
+                                        "width": "45"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_about_team": {
+                    "key": "layout_about_team",
+                    "name": "about_team",
+                    "label": "5. Sức Mạnh Tập Thể (Đội Ngũ & Phòng Ban)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_ab_team_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_ab_team_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_ab_team_banner",
+                            "label": "Ảnh tập thể lớn phía trên",
+                            "name": "banner_image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_ab_team_items",
+                            "label": "Danh sách phòng ban / Bộ phận (Slider)",
+                            "name": "team_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm phòng ban",
+                            "sub_fields": [
+                                {
+                                    "key": "field_team_image",
+                                    "label": "Ảnh phòng ban",
+                                    "name": "image",
+                                    "type": "image",
+                                    "return_format": "id",
+                                    "preview_size": "medium",
+                                    "wrapper": {
+                                        "width": "30"
+                                    }
+                                },
+                                {
+                                    "key": "field_team_name",
+                                    "label": "Tên phòng ban / Bộ phận",
+                                    "name": "name",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "70"
+                                    }
+                                },
+                                {
+                                    "key": "field_team_desc",
+                                    "label": "Mô tả vai trò / nhiệm vụ",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_about_cta": {
+                    "key": "layout_about_cta",
+                    "name": "about_cta",
+                    "label": "6. Nhà Máy & Quy Trình Sản Xuất",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_ab_cta_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_ab_cta_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_ab_cta_items",
+                            "label": "Danh sách Slide Nhà máy & Quy trình",
+                            "name": "factory_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm slide nhà máy / quy trình",
+                            "sub_fields": [
+                                {
+                                    "key": "field_ab_cta_item_img",
+                                    "label": "Ảnh slide (1376x768)",
+                                    "name": "image",
+                                    "type": "image",
+                                    "return_format": "id",
+                                    "preview_size": "medium",
+                                    "wrapper": {
+                                        "width": "35"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_cta_item_title",
+                                    "label": "Tiêu đề slide",
+                                    "name": "title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "65"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_cta_item_desc",
+                                    "label": "Mô tả chi tiết",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_about_timeline": {
+                    "key": "layout_about_timeline",
+                    "name": "about_timeline",
+                    "label": "7. [Tùy chọn] Timeline Từng Mốc Dấu Ấn",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_abtl_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_abtl_title",
+                            "label": "Tiêu đề khối Timeline",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_abtl_items",
+                            "label": "Các mốc thời gian",
+                            "name": "timeline_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm mốc",
+                            "sub_fields": [
+                                {
+                                    "key": "field_tl_year",
+                                    "label": "Năm / Giai đoạn",
+                                    "name": "year",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "25"
+                                    }
+                                },
+                                {
+                                    "key": "field_tl_title",
+                                    "label": "Tiêu đề mốc",
+                                    "name": "title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "45"
+                                    }
+                                },
+                                {
+                                    "key": "field_tl_image",
+                                    "label": "Ảnh minh họa",
+                                    "name": "image",
+                                    "type": "image",
+                                    "return_format": "id",
+                                    "preview_size": "medium",
+                                    "wrapper": {
+                                        "width": "30"
+                                    }
+                                },
+                                {
+                                    "key": "field_tl_desc",
+                                    "label": "Mô tả chi tiết",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_about_mission": {
+                    "key": "layout_about_mission",
+                    "name": "about_mission",
+                    "label": "8. [Tùy chọn] Tầm Nhìn & Sứ Mệnh",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_abm_vis_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_abm_sec_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_vis_img",
+                            "label": "Ảnh Tầm nhìn & Sứ mệnh",
+                            "name": "image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_vis_title",
+                            "label": "Tiêu đề Tầm nhìn (Tùy chọn)",
+                            "name": "vision_title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_vis_desc",
+                            "label": "Nội dung Tầm nhìn (Tùy chọn)",
+                            "name": "vision_desc",
+                            "type": "textarea",
+                            "rows": 3,
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_mis_title",
+                            "label": "Tiêu đề Sứ mệnh (Tùy chọn)",
+                            "name": "mission_title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_abm_mis_desc",
+                            "label": "Nội dung Sứ mệnh (Tùy chọn)",
+                            "name": "mission_desc",
+                            "type": "textarea",
+                            "rows": 3,
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        }
+                    ]
+                },
+                "layout_about_stats": {
+                    "key": "layout_about_stats",
+                    "name": "about_stats",
+                    "label": "9. [Tùy chọn] Những Con Số Biết Nói",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_ab_stat_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_ab_stat_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_ab_stat_img",
+                            "label": "Ảnh trung tâm",
+                            "name": "center_image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_ab_stat_items",
+                            "label": "Danh sách con số",
+                            "name": "items",
+                            "type": "repeater",
+                            "layout": "table",
+                            "button_label": "Thêm con số",
+                            "sub_fields": [
+                                {
+                                    "key": "field_ab_num_count",
+                                    "label": "Số lượng",
+                                    "name": "count",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "20"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_num_suffix",
+                                    "label": "Ký tự sau (%, +)",
+                                    "name": "suffix",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "20"
+                                    }
+                                },
+                                {
+                                    "key": "field_ab_num_title",
+                                    "label": "Mô tả con số",
+                                    "name": "title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "60"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    ],
     "location": [
         [
             {
@@ -22,6 +627,13 @@
             {
                 "param": "post",
                 "operator": "==",
+                "value": "1052"
+            }
+        ],
+        [
+            {
+                "param": "post",
+                "operator": "==",
                 "value": "936"
             }
         ]
@@ -34,1420 +646,6 @@
     "hide_on_screen": [],
     "active": true,
     "description": "",
-    "show_in_rest": false,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "_valid": true,
-    "local_file": "D:\\laragon\\www\\vinacos\\wp/wp-content/themes/spl/acf-json/group_vinacos_about.json",
-    "fields": [
-        {
-            "key": "field_vinacos_about_fc",
-            "name": "about_sections",
-            "type": "flexible_content",
-            "parent": "group_vinacos_about_page",
-            "ID": 0,
-            "label": "Nội dung trang Tâm Thế Cộng Sự",
-            "aria-label": "",
-            "prefix": "acf",
-            "value": null,
-            "menu_order": 0,
-            "instructions": "Thêm, sửa, xóa hoặc sắp xếp các block hiển thị trên trang Giới Thiệu",
-            "required": false,
-            "id": "",
-            "class": "",
-            "conditional_logic": false,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "button_label": "Thêm Block Giới Thiệu",
-            "layouts": {
-                "layout_about_hero": {
-                    "key": "layout_about_hero",
-                    "name": "about_hero",
-                    "label": "1. Banner Đầu Trang & Breadcrumb",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_abh_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_hero",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_abh_banner",
-                            "name": "banner_image",
-                            "type": "image",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ảnh banner đầu trang",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "id",
-                            "preview_size": "large",
-                            "parent_layout": "layout_about_hero",
-                            "_name": "banner_image",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
-                        },
-                        {
-                            "key": "field_abh_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề trang",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_hero",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_story": {
-                    "key": "layout_about_story",
-                    "name": "about_story",
-                    "label": "2. Câu chuyện & Tổ chức kiên định",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_abs_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_story",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_abs_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề khối",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_story",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abs_image",
-                            "name": "image",
-                            "type": "image",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Hình ảnh minh họa",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "id",
-                            "preview_size": "medium",
-                            "parent_layout": "layout_about_story",
-                            "_name": "image",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
-                        },
-                        {
-                            "key": "field_abs_content",
-                            "name": "content",
-                            "type": "wysiwyg",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Nội dung chi tiết",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 3,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "toolbar": "full",
-                            "media_upload": 1,
-                            "parent_layout": "layout_about_story",
-                            "_name": "content",
-                            "_valid": 1,
-                            "tabs": "all",
-                            "default_value": "",
-                            "delay": 0,
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_message": {
-                    "key": "layout_about_message",
-                    "name": "about_message",
-                    "label": "3. Thông điệp Slide 18 (Tâm thế cộng sự)",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_abm_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_message",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_abm_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Thông điệp chính / Trích dẫn (Text 2)",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "Câu thông điệp chính (Dùng thẻ <strong> từ_cần_in_đậm </strong> để nhấn mạnh)",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_message",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "Chặng đường vẫn còn dài, nhưng chúng ta đã có <strong>rất nhiều thành tựu</strong> đáng để ăn mừng.",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_subtitle",
-                            "name": "subtitle",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề phụ / Badge (Text 1)",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "Dòng chữ nhỏ kế bên icon (Mặc định: Công ty tuyệt vời của bạn)",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_message",
-                            "_name": "subtitle",
-                            "_valid": 1,
-                            "default_value": "Công ty tuyệt vời của bạn",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_ceo_name",
-                            "name": "ceo_name",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tên CEO / Lãnh đạo",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 3,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_message",
-                            "_name": "ceo_name",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_ceo_title",
-                            "name": "ceo_title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Chức danh",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 4,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_message",
-                            "_name": "ceo_title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_image",
-                            "name": "image",
-                            "type": "image",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ảnh minh họa (Desktop)",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 5,
-                            "instructions": "Để trống sẽ tự động dùng ảnh mặc định đã căn chỉnh",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "id",
-                            "preview_size": "medium",
-                            "parent_layout": "layout_about_message",
-                            "_name": "image",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
-                        },
-                        {
-                            "key": "field_abm_image_mobile",
-                            "name": "image_mobile",
-                            "type": "image",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ảnh minh họa (Mobile)",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 6,
-                            "instructions": "Ảnh riêng cho thiết bị di động (nếu có)",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "id",
-                            "preview_size": "medium",
-                            "parent_layout": "layout_about_message",
-                            "_name": "image_mobile",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
-                        },
-                        {
-                            "key": "field_abm_content",
-                            "name": "content",
-                            "type": "wysiwyg",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Nội dung thông điệp",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 6,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "toolbar": "full",
-                            "parent_layout": "layout_about_message",
-                            "_name": "content",
-                            "_valid": 1,
-                            "tabs": "all",
-                            "media_upload": 1,
-                            "default_value": "",
-                            "delay": 0,
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_timeline": {
-                    "key": "layout_about_timeline",
-                    "name": "about_timeline",
-                    "label": "4. Timeline Từng mốc dấu ấn",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_abtl_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_timeline",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_abtl_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề khối Timeline",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_timeline",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abtl_items",
-                            "name": "timeline_items",
-                            "type": "repeater",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Các mốc thời gian",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "layout": "block",
-                            "button_label": "Thêm mốc",
-                            "parent_layout": "layout_about_timeline",
-                            "_name": "timeline_items",
-                            "_valid": 1,
-                            "min": 0,
-                            "max": 0,
-                            "rows_per_page": 20,
-                            "collapsed": "",
-                            "sub_fields": [
-                                {
-                                    "key": "field_tl_year",
-                                    "name": "year",
-                                    "type": "text",
-                                    "parent": "field_abtl_items",
-                                    "ID": 0,
-                                    "label": "Năm / Giai đoạn",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 0,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "30",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "year",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_abtl_items"
-                                },
-                                {
-                                    "key": "field_tl_title",
-                                    "name": "title",
-                                    "type": "text",
-                                    "parent": "field_abtl_items",
-                                    "ID": 0,
-                                    "label": "Tiêu đề mốc",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 1,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "70",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "title",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_abtl_items"
-                                },
-                                {
-                                    "key": "field_tl_desc",
-                                    "name": "desc",
-                                    "type": "textarea",
-                                    "parent": "field_abtl_items",
-                                    "ID": 0,
-                                    "label": "Mô tả chi tiết",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 2,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "rows": 2,
-                                    "_name": "desc",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "new_lines": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_abtl_items"
-                                }
-                            ]
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_mission": {
-                    "key": "layout_about_mission",
-                    "name": "about_mission",
-                    "label": "5. Tầm nhìn & Sứ mệnh & Giá trị cốt lõi",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_abm_vis_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_mission",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_abm_vis_title",
-                            "name": "vision_title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề Tầm nhìn",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_mission",
-                            "_name": "vision_title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_vis_desc",
-                            "name": "vision_desc",
-                            "type": "textarea",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Nội dung Tầm nhìn",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "rows": 3,
-                            "parent_layout": "layout_about_mission",
-                            "_name": "vision_desc",
-                            "_valid": 1,
-                            "default_value": "",
-                            "new_lines": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_mis_title",
-                            "name": "mission_title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề Sứ mệnh",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 3,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_mission",
-                            "_name": "mission_title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_abm_mis_desc",
-                            "name": "mission_desc",
-                            "type": "textarea",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Nội dung Sứ mệnh",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 4,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "rows": 3,
-                            "parent_layout": "layout_about_mission",
-                            "_name": "mission_desc",
-                            "_valid": 1,
-                            "default_value": "",
-                            "new_lines": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_stats": {
-                    "key": "layout_about_stats",
-                    "name": "about_stats",
-                    "label": "6. Những con số biết nói",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_ab_stat_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_stats",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_ab_stat_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề khối",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_stats",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_ab_stat_items",
-                            "name": "items",
-                            "type": "repeater",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Danh sách con số",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "layout": "table",
-                            "button_label": "Thêm con số",
-                            "parent_layout": "layout_about_stats",
-                            "_name": "items",
-                            "_valid": 1,
-                            "min": 0,
-                            "max": 0,
-                            "rows_per_page": 20,
-                            "collapsed": "",
-                            "sub_fields": [
-                                {
-                                    "key": "field_ab_num_count",
-                                    "name": "count",
-                                    "type": "number",
-                                    "parent": "field_ab_stat_items",
-                                    "ID": 0,
-                                    "label": "Số lượng",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 0,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "20",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "count",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "min": "",
-                                    "max": "",
-                                    "step": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_ab_stat_items"
-                                },
-                                {
-                                    "key": "field_ab_num_suffix",
-                                    "name": "suffix",
-                                    "type": "text",
-                                    "parent": "field_ab_stat_items",
-                                    "ID": 0,
-                                    "label": "Ký tự sau (%, +)",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 1,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "20",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "suffix",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_ab_stat_items"
-                                },
-                                {
-                                    "key": "field_ab_num_title",
-                                    "name": "title",
-                                    "type": "text",
-                                    "parent": "field_ab_stat_items",
-                                    "ID": 0,
-                                    "label": "Mô tả con số",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 2,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "60",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "title",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_ab_stat_items"
-                                }
-                            ]
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_team": {
-                    "key": "layout_about_team",
-                    "name": "about_team",
-                    "label": "7. Sức mạnh tập thể (Đội ngũ chuyên gia & Phòng ban)",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_ab_team_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_team",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_ab_team_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề khối",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_team",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_ab_team_items",
-                            "name": "team_items",
-                            "type": "repeater",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Danh sách phòng ban / chuyên gia",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "layout": "block",
-                            "button_label": "Thêm phòng ban",
-                            "parent_layout": "layout_about_team",
-                            "_name": "team_items",
-                            "_valid": 1,
-                            "min": 0,
-                            "max": 0,
-                            "rows_per_page": 20,
-                            "collapsed": "",
-                            "sub_fields": [
-                                {
-                                    "key": "field_team_name",
-                                    "name": "name",
-                                    "type": "text",
-                                    "parent": "field_ab_team_items",
-                                    "ID": 0,
-                                    "label": "Tên phòng ban / vị trí",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 0,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "50",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "name",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_ab_team_items"
-                                },
-                                {
-                                    "key": "field_team_desc",
-                                    "name": "desc",
-                                    "type": "textarea",
-                                    "parent": "field_ab_team_items",
-                                    "ID": 0,
-                                    "label": "Mô tả nhiệm vụ",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "value": null,
-                                    "menu_order": 1,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "wrapper": {
-                                        "width": "50",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "rows": 2,
-                                    "_name": "desc",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "new_lines": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_ab_team_items"
-                                }
-                            ]
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_about_cta": {
-                    "key": "layout_about_cta",
-                    "name": "about_cta",
-                    "label": "8. Nhà máy & Quy trình sản xuất",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_ab_cta_disable",
-                            "name": "disable",
-                            "type": "true_false",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ẩn section này",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_about_cta",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "key": "field_ab_cta_title",
-                            "name": "title",
-                            "type": "text",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Tiêu đề",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_cta",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "key": "field_ab_cta_img",
-                            "name": "image",
-                            "type": "image",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Ảnh nhà máy",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "return_format": "id",
-                            "preview_size": "medium",
-                            "parent_layout": "layout_about_cta",
-                            "_name": "image",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
-                        },
-                        {
-                            "key": "field_ab_cta_content",
-                            "name": "content",
-                            "type": "wysiwyg",
-                            "parent": "field_vinacos_about_fc",
-                            "ID": 0,
-                            "label": "Nội dung chi tiết",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "value": null,
-                            "menu_order": 3,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_about_cta",
-                            "_name": "content",
-                            "_valid": 1,
-                            "tabs": "all",
-                            "toolbar": "full",
-                            "media_upload": 1,
-                            "default_value": "",
-                            "delay": 0,
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                }
-            },
-            "_name": "about_sections",
-            "_valid": 1,
-            "min": "",
-            "max": ""
-        }
-    ]
+    "show_in_rest": 0,
+    "modified": 1794369384
 }

@@ -9,9 +9,12 @@ use SPL\Core\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
+$is_en   = function_exists( 'pll_current_language' ) && 'en' === pll_current_language();
+$section = is_array( $args ?? null ) ? $args : [];
 $img_dir = get_template_directory_uri() . '/static/img/vinacos/';
-$title   = $data['title'] ?? 'Từng mốc dấu ấn';
-$items   = [
+$title   = ! empty( $section['title'] ) ? (string) $section['title'] : ( $is_en ? 'Key Development Milestones' : 'Từng mốc dấu ấn' );
+
+$default_items = [
 	[ 'year' => '2015', 'desc' => 'Khởi đầu. Thành lập công ty tại TP. Hồ Chí Minh', 'image' => $img_dir . 'factory-overview.jpg' ],
 	[ 'year' => '2016', 'desc' => 'Bước tiến đầu. Nhà máy đầu tiên tại Bến Tre khởi công và đi vào hoạt động.', 'image' => $img_dir . 'cleanroom-factory.jpg' ],
 	[ 'year' => '2018', 'desc' => 'Mở rộng. Nhà máy thứ hai chính thức hoạt động, nâng tầm quy mô sản xuất.', 'image' => $img_dir . 'factory-overview.jpg' ],
@@ -22,6 +25,27 @@ $items   = [
 	[ 'year' => '2026', 'desc' => 'Tiến xa. Một cột mốc quan trọng: VINACOS chính thức trở thành Doanh nghiệp Khoa học – Công nghệ, khẳng định cam kết đầu tư mạnh mẽ vào đội ngũ R&D trình độ cao và hệ thống Lab tiêu chuẩn.', 'image' => $img_dir . 'rd-lab-main.jpg' ],
 	[ 'year' => 'Đến 2030', 'desc' => 'Khẳng định. VINACOS với vị thế đối tác R&D uy tín hàng đầu, góp phần đưa mỹ phẩm Việt Nam tỏa sáng trên bản đồ thế giới.', 'image' => $img_dir . 'factory-overview.jpg' ],
 ];
+
+$items = [];
+if ( ! empty( $section['timeline_items'] ) && is_array( $section['timeline_items'] ) ) {
+	foreach ( array_values( $section['timeline_items'] ) as $i => $row ) {
+		$fallback_img = $default_items[ $i % count( $default_items ) ]['image'];
+		$img_url      = function_exists( 'spl_get_image_url' )
+			? spl_get_image_url( $row['image'] ?? null, $fallback_img )
+			: $fallback_img;
+		$row_title    = trim( (string) ( $row['title'] ?? '' ) );
+		$row_desc     = trim( (string) ( $row['desc'] ?? '' ) );
+		$full_desc    = ( '' !== $row_title && '' !== $row_desc ) ? ( $row_title . '. ' . $row_desc ) : ( '' !== $row_desc ? $row_desc : $row_title );
+		$items[]      = [
+			'year'  => (string) ( $row['year'] ?? '' ),
+			'desc'  => $full_desc,
+			'image' => $img_url,
+		];
+	}
+}
+if ( empty( $items ) ) {
+	$items = $default_items;
+}
 ?>
 <section class="about-2-section section-large bg-slate-50">
 	<div class="container">

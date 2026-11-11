@@ -7,10 +7,15 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$title = $data['title'] ?? 'Những con số biết nói';
-$center_image = get_template_directory_uri() . '/static/img/stats-about-vinacos.png';
+$is_en        = function_exists( 'pll_current_language' ) && 'en' === pll_current_language();
+$section      = is_array( $args ?? null ) ? $args : [];
+$title        = ! empty( $section['title'] ) ? (string) $section['title'] : ( $is_en ? 'Milestones in Numbers' : 'Những con số biết nói' );
+$default_img  = get_template_directory_uri() . '/static/img/stats-about-vinacos.png';
+$center_image = function_exists( 'spl_get_image_url' )
+	? spl_get_image_url( $section['center_image'] ?? null, $default_img )
+	: $default_img;
 
-$stats = [
+$default_stats = [
 	[
 		'number' => '0%',
 		'desc'   => 'Tỉ lệ sai sót về pháp lý và hoạt chất cấm',
@@ -32,6 +37,20 @@ $stats = [
 		'svg'    => '<svg class="w-14 h-14 text-[#1e60a3]" viewBox="0 0 52 52" fill="none" stroke="#1e60a3" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="26" cy="26" r="21" stroke-dasharray="2 3" stroke-opacity="0.45"/><circle cx="26" cy="20" r="5"/><path d="M16 38c0-5.5 4.5-9 10-9s10 3.5 10 9"/><path d="M33 16l4-4M37 12v4h-4"/></svg>',
 	],
 ];
+
+$stats = [];
+if ( ! empty( $section['items'] ) && is_array( $section['items'] ) ) {
+	foreach ( array_values( $section['items'] ) as $i => $row ) {
+		$stats[] = [
+			'number' => trim( (string) ( $row['count'] ?? '' ) . (string) ( $row['suffix'] ?? '' ) ),
+			'desc'   => (string) ( $row['title'] ?? '' ),
+			'svg'    => $default_stats[ $i % count( $default_stats ) ]['svg'],
+		];
+	}
+}
+if ( empty( $stats ) ) {
+	$stats = $default_stats;
+}
 
 $promises = [
 	[
