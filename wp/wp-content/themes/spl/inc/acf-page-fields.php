@@ -1154,7 +1154,7 @@ function spl_register_all_vinacos_page_acf_fields(): void {
 	] );
 
 	// -------------------------------------------------------------
-	// 3. HỆ THỐNG R&D (COOPERATION / SERVICES PAGE)
+	// 3. HỆ THỐNG R&D (COOPERATION / R&D SYSTEM PAGE)
 	// -------------------------------------------------------------
 	acf_add_local_field_group( [
 		'key'                   => 'group_vinacos_cooperation_page',
@@ -1162,186 +1162,313 @@ function spl_register_all_vinacos_page_acf_fields(): void {
 		'fields'                => [
 			[
 				'key'          => 'field_vinacos_coop_fc',
-				'label'        => __( 'Nội dung trang Hệ Thống R&D', 'spl' ),
+				'label'        => __( 'Nội dung trang Hệ Thống R&D (1:1 Giao Diện Thực Tế)', 'spl' ),
 				'name'         => 'cooperation_sections',
 				'type'         => 'flexible_content',
-				'instructions' => __( 'Thêm, sửa, xóa hoặc sắp xếp các block hiển thị trên trang Hệ Thống R&D / OEM-ODM', 'spl' ),
+				'instructions' => __( 'Quản trị toàn bộ 5 phần hiển thị thực tế trên trang Hệ Thống R&D (/oem-odm-gia-cong-unila-viet-nam/)', 'spl' ),
 				'button_label' => __( 'Thêm Block R&D', 'spl' ),
 				'layouts'      => [
-					// 1. Hero
+					// 1. Hero Banner & Breadcrumb
 					'layout_coop_hero' => [
 						'key'        => 'layout_coop_hero',
 						'name'       => 'cooperation_hero',
-						'label'      => __( '1. Banner Đầu Trang & Breadcrumb', 'spl' ),
+						'label'      => __( '1. Banner Đầu Trang & Đường Dẫn (Breadcrumb)', 'spl' ),
 						'display'    => 'block',
 						'sub_fields' => [
 							[
-								'key'          => 'field_coop_h_disable',
-								'label'        => __( 'Ẩn section này', 'spl' ),
-								'name'         => 'disable',
-								'type'         => 'true_false',
-								'ui'           => 1,
-								'default_value'=> 0,
+								'key'           => 'field_coop_h_disable',
+								'label'         => __( 'Ẩn section này', 'spl' ),
+								'name'          => 'disable',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 0,
 							],
 							[
 								'key'           => 'field_coop_h_banner',
-								'label'         => __( 'Ảnh banner đầu trang', 'spl' ),
+								'label'         => __( 'Ảnh banner đầu trang (Desktop)', 'spl' ),
 								'name'          => 'banner_image',
 								'type'          => 'image',
 								'return_format' => 'id',
-								'preview_size'  => 'large',
-								'wrapper'       => [ 'width' => '50' ],
+								'preview_size'  => 'medium',
+								'wrapper'       => [ 'width' => '34' ],
 							],
 							[
-								'key'     => 'field_coop_h_title',
-								'label'   => __( 'Tiêu đề trang', 'spl' ),
-								'name'    => 'title',
+								'key'           => 'field_coop_h_banner_mobile',
+								'label'         => __( 'Ảnh banner Mobile (Tùy chọn)', 'spl' ),
+								'name'          => 'banner_image_mobile',
+								'type'          => 'image',
+								'return_format' => 'id',
+								'preview_size'  => 'medium',
+								'wrapper'       => [ 'width' => '33' ],
+							],
+							[
+								'key'     => 'field_coop_h_breadcrumb',
+								'label'   => __( 'Nhãn đường dẫn (Breadcrumb)', 'spl' ),
+								'name'    => 'breadcrumb_label',
 								'type'    => 'text',
-								'wrapper' => [ 'width' => '50' ],
+								'wrapper' => [ 'width' => '33' ],
 							],
 						],
 					],
 
-					// 2. Benefits (Sáng tạo & Sáng chế)
+					// 2. Sáng tạo & Sáng chế (.oem-1-section)
 					'layout_coop_benefits' => [
 						'key'        => 'layout_coop_benefits',
 						'name'       => 'cooperation_benefits',
-						'label'      => __( '2. Năng lực Sáng tạo & Sáng chế R&D', 'spl' ),
+						'label'      => __( '2. Sáng Tạo & Sáng Chế (Ấn Phẩm / Bài Báo R&D)', 'spl' ),
 						'display'    => 'block',
 						'sub_fields' => [
 							[
-								'key'          => 'field_coop_b_disable',
-								'label'        => __( 'Ẩn section này', 'spl' ),
-								'name'         => 'disable',
-								'type'         => 'true_false',
-								'ui'           => 1,
-								'default_value'=> 0,
+								'key'           => 'field_coop_b_disable',
+								'label'         => __( 'Ẩn section này', 'spl' ),
+								'name'          => 'disable',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 0,
 							],
 							[
-								'key'     => 'field_coop_b_title',
-								'label'   => __( 'Tiêu đề khối', 'spl' ),
-								'name'    => 'title',
-								'type'    => 'text',
+								'key'   => 'field_coop_b_heading',
+								'label' => __( 'Tiêu đề chính (H1)', 'spl' ),
+								'name'  => 'section_heading',
+								'type'  => 'text',
+							],
+							[
+								'key'          => 'field_coop_b_intro',
+								'label'        => __( 'Nội dung giới thiệu bên dưới tiêu đề', 'spl' ),
+								'name'         => 'intro_content',
+								'type'         => 'wysiwyg',
+								'toolbar'      => 'full',
+								'media_upload' => 0,
 							],
 							[
 								'key'          => 'field_coop_b_items',
-								'label'        => __( 'Danh sách năng lực R&D', 'spl' ),
+								'label'        => __( 'Danh sách ảnh bài báo / ấn phẩm R&D (3 khung dọc)', 'spl' ),
 								'name'         => 'benefit_items',
 								'type'         => 'repeater',
 								'layout'       => 'block',
-								'button_label' => __( 'Thêm năng lực', 'spl' ),
+								'button_label' => __( 'Thêm ảnh ấn phẩm R&D', 'spl' ),
 								'sub_fields'   => [
 									[
+										'key'           => 'field_ben_img',
+										'label'         => __( 'Ảnh minh họa ấn phẩm', 'spl' ),
+										'name'          => 'image',
+										'type'          => 'image',
+										'return_format' => 'id',
+										'preview_size'  => 'medium',
+										'wrapper'       => [ 'width' => '40' ],
+									],
+									[
 										'key'     => 'field_ben_title',
-										'label'   => __( 'Tiêu đề năng lực', 'spl' ),
+										'label'   => __( 'Tiêu đề / Chú thích ảnh (Alt)', 'spl' ),
+										'name'    => 'title',
+										'type'    => 'text',
+										'wrapper' => [ 'width' => '60' ],
+									],
+								],
+							],
+						],
+					],
+
+					// 3. Nghiên cứu nền chất (.oem-2-section)
+					'layout_coop_formulation' => [
+						'key'        => 'layout_coop_formulation',
+						'name'       => 'cooperation_formulation',
+						'label'      => __( '3. Nghiên Cứu Nền Chất (Accordion & Ảnh Phải)', 'spl' ),
+						'display'    => 'block',
+						'sub_fields' => [
+							[
+								'key'           => 'field_coop_fm_disable',
+								'label'         => __( 'Ẩn section này', 'spl' ),
+								'name'          => 'disable',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 0,
+							],
+							[
+								'key'     => 'field_coop_fm_title',
+								'label'   => __( 'Tiêu đề khối', 'spl' ),
+								'name'    => 'title',
+								'type'    => 'text',
+								'wrapper' => [ 'width' => '50' ],
+							],
+							[
+								'key'           => 'field_coop_fm_img',
+								'label'         => __( 'Ảnh minh họa bên phải (640×888)', 'spl' ),
+								'name'          => 'image',
+								'type'          => 'image',
+								'return_format' => 'id',
+								'preview_size'  => 'medium',
+								'wrapper'       => [ 'width' => '50' ],
+							],
+							[
+								'key'          => 'field_coop_fm_items',
+								'label'        => __( 'Danh sách nền chất (Accordion đóng/mở)', 'spl' ),
+								'name'         => 'accordion_items',
+								'type'         => 'repeater',
+								'layout'       => 'block',
+								'button_label' => __( 'Thêm nền chất', 'spl' ),
+								'sub_fields'   => [
+									[
+										'key'     => 'field_coop_fm_item_head',
+										'label'   => __( 'Tiêu đề thanh đóng/mở (In hoa)', 'spl' ),
+										'name'    => 'heading',
+										'type'    => 'text',
+										'wrapper' => [ 'width' => '50' ],
+									],
+									[
+										'key'     => 'field_coop_fm_item_sub',
+										'label'   => __( 'Tiêu đề phụ bên trong', 'spl' ),
+										'name'    => 'sub_title',
+										'type'    => 'text',
+										'wrapper' => [ 'width' => '50' ],
+									],
+									[
+										'key'   => 'field_coop_fm_item_desc',
+										'label' => __( 'Nội dung mô tả chi tiết', 'spl' ),
+										'name'  => 'desc',
+										'type'  => 'textarea',
+										'rows'  => 3,
+									],
+								],
+							],
+						],
+					],
+
+					// 4. Đối tác (.oem-3-section)
+					'layout_coop_partners' => [
+						'key'        => 'layout_coop_partners',
+						'name'       => 'cooperation_partners',
+						'label'      => __( '4. Đối Tác Nghiên Cứu & Nguyên Liệu', 'spl' ),
+						'display'    => 'block',
+						'sub_fields' => [
+							[
+								'key'           => 'field_coop_pt_disable',
+								'label'         => __( 'Ẩn section này', 'spl' ),
+								'name'          => 'disable',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 0,
+							],
+							[
+								'key'   => 'field_coop_pt_title',
+								'label' => __( 'Tiêu đề khối', 'spl' ),
+								'name'  => 'title',
+								'type'  => 'text',
+							],
+							[
+								'key'          => 'field_coop_pt_desc',
+								'label'        => __( 'Nội dung giới thiệu đối tác', 'spl' ),
+								'name'         => 'desc',
+								'type'         => 'wysiwyg',
+								'toolbar'      => 'full',
+								'media_upload' => 0,
+							],
+							[
+								'key'          => 'field_coop_pt_items',
+								'label'        => __( 'Danh sách ảnh slide đối tác (680×454)', 'spl' ),
+								'name'         => 'partner_items',
+								'type'         => 'repeater',
+								'layout'       => 'block',
+								'button_label' => __( 'Thêm ảnh đối tác', 'spl' ),
+								'sub_fields'   => [
+									[
+										'key'           => 'field_coop_pt_item_img',
+										'label'         => __( 'Ảnh đối tác', 'spl' ),
+										'name'          => 'image',
+										'type'          => 'image',
+										'return_format' => 'id',
+										'preview_size'  => 'medium',
+										'wrapper'       => [ 'width' => '40' ],
+									],
+									[
+										'key'     => 'field_coop_pt_item_title',
+										'label'   => __( 'Chú thích ảnh (Alt)', 'spl' ),
+										'name'    => 'title',
+										'type'    => 'text',
+										'wrapper' => [ 'width' => '60' ],
+									],
+								],
+							],
+						],
+					],
+
+					// 5. Quy trình nghiên cứu và sản xuất (.oem-5-section)
+					'layout_coop_process' => [
+						'key'        => 'layout_coop_process',
+						'name'       => 'cooperation_process',
+						'label'      => __( '5. Quy Trình Nghiên Cứu Và Sản Xuất (Ảnh Lab & 3 Định Hướng)', 'spl' ),
+						'display'    => 'block',
+						'sub_fields' => [
+							[
+								'key'           => 'field_coop_p_disable',
+								'label'         => __( 'Ẩn section này', 'spl' ),
+								'name'          => 'disable',
+								'type'          => 'true_false',
+								'ui'            => 1,
+								'default_value' => 0,
+							],
+							[
+								'key'     => 'field_coop_p_heading',
+								'label'   => __( 'Tiêu đề khối', 'spl' ),
+								'name'    => 'section_heading',
+								'type'    => 'text',
+								'wrapper' => [ 'width' => '50' ],
+							],
+							[
+								'key'     => 'field_coop_p_subtitle',
+								'label'   => __( 'Mô tả phụ dưới tiêu đề (Tùy chọn)', 'spl' ),
+								'name'    => 'subtitle',
+								'type'    => 'text',
+								'wrapper' => [ 'width' => '50' ],
+							],
+							[
+								'key'           => 'field_coop_p_lab_img',
+								'label'         => __( 'Ảnh phòng Lab bên trái (400×533)', 'spl' ),
+								'name'          => 'lab_image',
+								'type'          => 'image',
+								'return_format' => 'id',
+								'preview_size'  => 'medium',
+								'wrapper'       => [ 'width' => '35' ],
+							],
+							[
+								'key'          => 'field_coop_p_intro',
+								'label'        => __( 'Đoạn giới thiệu bên cạnh ảnh phòng Lab', 'spl' ),
+								'name'         => 'intro_desc',
+								'type'         => 'wysiwyg',
+								'toolbar'      => 'full',
+								'media_upload' => 0,
+								'wrapper'      => [ 'width' => '65' ],
+							],
+							[
+								'key'          => 'field_coop_p_pillars',
+								'label'        => __( '3 Hướng Phát Triển Công Thức (01, 02, 03)', 'spl' ),
+								'name'         => 'rd_pillars',
+								'type'         => 'repeater',
+								'layout'       => 'block',
+								'button_label' => __( 'Thêm hướng phát triển', 'spl' ),
+								'sub_fields'   => [
+									[
+										'key'     => 'field_coop_pil_title',
+										'label'   => __( 'Tiêu đề (VD: 01 - Từ sản phẩm có sẵn)', 'spl' ),
 										'name'    => 'title',
 										'type'    => 'text',
 										'wrapper' => [ 'width' => '50' ],
 									],
 									[
-										'key'           => 'field_ben_img',
-										'label'         => __( 'Ảnh minh họa', 'spl' ),
-										'name'          => 'image',
-										'type'          => 'image',
-										'return_format' => 'id',
-										'preview_size'  => 'medium',
-										'wrapper'       => [ 'width' => '50' ],
+										'key'     => 'field_coop_pil_sub',
+										'label'   => __( 'Mô tả đối tượng (chữ xanh)', 'spl' ),
+										'name'    => 'subtitle',
+										'type'    => 'text',
+										'wrapper' => [ 'width' => '50' ],
 									],
 									[
-										'key'     => 'field_ben_desc',
-										'label'   => __( 'Mô tả chi tiết', 'spl' ),
-										'name'    => 'desc',
-										'type'    => 'textarea',
-										'rows'    => 3,
+										'key'   => 'field_coop_pil_desc',
+										'label' => __( 'Nội dung chi tiết', 'spl' ),
+										'name'  => 'desc',
+										'type'  => 'textarea',
+										'rows'  => 3,
 									],
 								],
-							],
-						],
-					],
-
-					// 3. Process (Quy trình R&D)
-					'layout_coop_process' => [
-						'key'        => 'layout_coop_process',
-						'name'       => 'cooperation_process',
-						'label'      => __( '3. Quy trình R&D & Gia công OEM/ODM 6 Bước', 'spl' ),
-						'display'    => 'block',
-						'sub_fields' => [
-							[
-								'key'          => 'field_coop_p_disable',
-								'label'        => __( 'Ẩn section này', 'spl' ),
-								'name'         => 'disable',
-								'type'         => 'true_false',
-								'ui'           => 1,
-								'default_value'=> 0,
-							],
-							[
-								'key'     => 'field_coop_p_title',
-								'label'   => __( 'Tiêu đề khối quy trình', 'spl' ),
-								'name'    => 'title',
-								'type'    => 'text',
-							],
-							[
-								'key'          => 'field_coop_p_steps',
-								'label'        => __( 'Các bước quy trình', 'spl' ),
-								'name'         => 'process_steps',
-								'type'         => 'repeater',
-								'layout'       => 'block',
-								'button_label' => __( 'Thêm bước', 'spl' ),
-								'sub_fields'   => [
-									[
-										'key'     => 'field_step_num',
-										'label'   => __( 'Bước số (01, 02...)', 'spl' ),
-										'name'    => 'step_num',
-										'type'    => 'text',
-										'wrapper' => [ 'width' => '20' ],
-									],
-									[
-										'key'     => 'field_step_title',
-										'label'   => __( 'Tên bước', 'spl' ),
-										'name'    => 'title',
-										'type'    => 'text',
-										'wrapper' => [ 'width' => '80' ],
-									],
-									[
-										'key'     => 'field_step_desc',
-										'label'   => __( 'Mô tả chi tiết bước', 'spl' ),
-										'name'    => 'desc',
-										'type'    => 'textarea',
-										'rows'    => 2,
-									],
-								],
-							],
-						],
-					],
-
-					// 4. Form (Đăng ký tư vấn)
-					'layout_coop_form' => [
-						'key'        => 'layout_coop_form',
-						'name'       => 'cooperation_form',
-						'label'      => __( '4. Form Đăng Ký Tư Vấn R&D', 'spl' ),
-						'display'    => 'block',
-						'sub_fields' => [
-							[
-								'key'          => 'field_coop_f_disable',
-								'label'        => __( 'Ẩn section này', 'spl' ),
-								'name'         => 'disable',
-								'type'         => 'true_false',
-								'ui'           => 1,
-								'default_value'=> 0,
-							],
-							[
-								'key'     => 'field_coop_f_title',
-								'label'   => __( 'Tiêu đề form', 'spl' ),
-								'name'    => 'title',
-								'type'    => 'text',
-								'wrapper' => [ 'width' => '50' ],
-							],
-							[
-								'key'     => 'field_coop_f_subtitle',
-								'label'   => __( 'Mô tả phụ', 'spl' ),
-								'name'    => 'subtitle',
-								'type'    => 'text',
-								'wrapper' => [ 'width' => '50' ],
 							],
 						],
 					],
@@ -1382,4 +1509,7 @@ function spl_register_all_vinacos_page_acf_fields(): void {
 
 if ( is_file( __DIR__ . '/acf-about-sync.php' ) ) {
 	require_once __DIR__ . '/acf-about-sync.php';
+}
+if ( is_file( __DIR__ . '/acf-cooperation-sync.php' ) ) {
+	require_once __DIR__ . '/acf-cooperation-sync.php';
 }

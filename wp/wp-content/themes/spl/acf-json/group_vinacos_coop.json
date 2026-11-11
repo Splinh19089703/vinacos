@@ -1,646 +1,345 @@
 {
-    "ID": 0,
     "key": "group_vinacos_cooperation_page",
     "title": "VINACOS - Quản Trị Trang Hệ Thống R&D",
     "fields": [
         {
-            "ID": 0,
             "key": "field_vinacos_coop_fc",
-            "label": "Nội dung trang Hệ Thống R&D",
+            "label": "Nội dung trang Hệ Thống R&D (1:1 Giao Diện Thực Tế)",
             "name": "cooperation_sections",
-            "aria-label": "",
-            "prefix": "acf",
             "type": "flexible_content",
-            "value": null,
-            "menu_order": 0,
-            "instructions": "Thêm, sửa, xóa hoặc sắp xếp các block hiển thị trên trang Hệ Thống R&D \/ OEM-ODM",
-            "required": false,
-            "id": "",
-            "class": "",
-            "conditional_logic": false,
-            "parent": "group_vinacos_cooperation_page",
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
+            "instructions": "Quản trị toàn bộ 5 phần hiển thị thực tế trên trang Hệ Thống R&D (/oem-odm-gia-cong-unila-viet-nam/)",
             "button_label": "Thêm Block R&D",
             "layouts": {
                 "layout_coop_hero": {
                     "key": "layout_coop_hero",
                     "name": "cooperation_hero",
-                    "label": "1. Banner Đầu Trang & Breadcrumb",
+                    "label": "1. Banner Đầu Trang & Đường Dẫn (Breadcrumb)",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "ID": 0,
                             "key": "field_coop_h_disable",
                             "label": "Ẩn section này",
                             "name": "disable",
-                            "aria-label": "",
-                            "prefix": "acf",
                             "type": "true_false",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
                             "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_coop_hero",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
+                            "default_value": 0
                         },
                         {
-                            "ID": 0,
                             "key": "field_coop_h_banner",
-                            "label": "Ảnh banner đầu trang",
+                            "label": "Ảnh banner đầu trang (Desktop)",
                             "name": "banner_image",
-                            "aria-label": "",
-                            "prefix": "acf",
                             "type": "image",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
                             "return_format": "id",
-                            "preview_size": "large",
-                            "parent_layout": "layout_coop_hero",
-                            "_name": "banner_image",
-                            "_valid": 1,
-                            "library": "all",
-                            "min_width": 0,
-                            "min_height": 0,
-                            "min_size": 0,
-                            "max_width": 0,
-                            "max_height": 0,
-                            "max_size": 0,
-                            "mime_types": ""
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "34"
+                            }
                         },
                         {
-                            "ID": 0,
-                            "key": "field_coop_h_title",
-                            "label": "Tiêu đề trang",
-                            "name": "title",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "text",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
+                            "key": "field_coop_h_banner_mobile",
+                            "label": "Ảnh banner Mobile (Tùy chọn)",
+                            "name": "banner_image_mobile",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
                             "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_coop_hero",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
+                                "width": "33"
+                            }
+                        },
+                        {
+                            "key": "field_coop_h_breadcrumb",
+                            "label": "Nhãn đường dẫn (Breadcrumb)",
+                            "name": "breadcrumb_label",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "33"
+                            }
                         }
-                    ],
-                    "min": "",
-                    "max": ""
+                    ]
                 },
                 "layout_coop_benefits": {
                     "key": "layout_coop_benefits",
                     "name": "cooperation_benefits",
-                    "label": "2. Năng lực Sáng tạo & Sáng chế R&D",
+                    "label": "2. Sáng Tạo & Sáng Chế (Ấn Phẩm / Bài Báo R&D)",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "ID": 0,
                             "key": "field_coop_b_disable",
                             "label": "Ẩn section này",
                             "name": "disable",
-                            "aria-label": "",
-                            "prefix": "acf",
                             "type": "true_false",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
                             "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_coop_benefits",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
+                            "default_value": 0
                         },
                         {
-                            "ID": 0,
-                            "key": "field_coop_b_title",
-                            "label": "Tiêu đề khối",
-                            "name": "title",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "text",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_coop_benefits",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
+                            "key": "field_coop_b_heading",
+                            "label": "Tiêu đề chính (H1)",
+                            "name": "section_heading",
+                            "type": "text"
                         },
                         {
-                            "ID": 0,
+                            "key": "field_coop_b_intro",
+                            "label": "Nội dung giới thiệu bên dưới tiêu đề",
+                            "name": "intro_content",
+                            "type": "wysiwyg",
+                            "toolbar": "full",
+                            "media_upload": 0
+                        },
+                        {
                             "key": "field_coop_b_items",
-                            "label": "Danh sách năng lực R&D",
+                            "label": "Danh sách ảnh bài báo / ấn phẩm R&D (3 khung dọc)",
                             "name": "benefit_items",
-                            "aria-label": "",
-                            "prefix": "acf",
                             "type": "repeater",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
                             "layout": "block",
-                            "button_label": "Thêm năng lực",
-                            "parent_layout": "layout_coop_benefits",
-                            "_name": "benefit_items",
-                            "_valid": 1,
+                            "button_label": "Thêm ảnh ấn phẩm R&D",
                             "sub_fields": [
                                 {
-                                    "ID": 0,
-                                    "key": "field_ben_title",
-                                    "label": "Tiêu đề năng lực",
-                                    "name": "title",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "type": "text",
-                                    "value": null,
-                                    "menu_order": 0,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_b_items",
-                                    "wrapper": {
-                                        "width": "50",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "title",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_coop_b_items"
-                                },
-                                {
-                                    "ID": 0,
                                     "key": "field_ben_img",
-                                    "label": "Ảnh minh họa",
+                                    "label": "Ảnh minh họa ấn phẩm",
                                     "name": "image",
-                                    "aria-label": "",
-                                    "prefix": "acf",
                                     "type": "image",
-                                    "value": null,
-                                    "menu_order": 1,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_b_items",
-                                    "wrapper": {
-                                        "width": "50",
-                                        "class": "",
-                                        "id": ""
-                                    },
                                     "return_format": "id",
                                     "preview_size": "medium",
-                                    "_name": "image",
-                                    "_valid": 1,
-                                    "library": "all",
-                                    "min_width": 0,
-                                    "min_height": 0,
-                                    "min_size": 0,
-                                    "max_width": 0,
-                                    "max_height": 0,
-                                    "max_size": 0,
-                                    "mime_types": "",
-                                    "parent_repeater": "field_coop_b_items"
+                                    "wrapper": {
+                                        "width": "40"
+                                    }
                                 },
                                 {
-                                    "ID": 0,
-                                    "key": "field_ben_desc",
-                                    "label": "Mô tả chi tiết",
-                                    "name": "desc",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "type": "textarea",
-                                    "value": null,
-                                    "menu_order": 2,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_b_items",
+                                    "key": "field_ben_title",
+                                    "label": "Tiêu đề / Chú thích ảnh (Alt)",
+                                    "name": "title",
+                                    "type": "text",
                                     "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "rows": 3,
-                                    "_name": "desc",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "new_lines": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_coop_b_items"
+                                        "width": "60"
+                                    }
                                 }
-                            ],
-                            "min": 0,
-                            "max": 0,
-                            "rows_per_page": 20,
-                            "collapsed": ""
+                            ]
                         }
-                    ],
-                    "min": "",
-                    "max": ""
+                    ]
+                },
+                "layout_coop_formulation": {
+                    "key": "layout_coop_formulation",
+                    "name": "cooperation_formulation",
+                    "label": "3. Nghiên Cứu Nền Chất (Accordion & Ảnh Phải)",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_coop_fm_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_coop_fm_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_coop_fm_img",
+                            "label": "Ảnh minh họa bên phải (640×888)",
+                            "name": "image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_coop_fm_items",
+                            "label": "Danh sách nền chất (Accordion đóng/mở)",
+                            "name": "accordion_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm nền chất",
+                            "sub_fields": [
+                                {
+                                    "key": "field_coop_fm_item_head",
+                                    "label": "Tiêu đề thanh đóng/mở (In hoa)",
+                                    "name": "heading",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "50"
+                                    }
+                                },
+                                {
+                                    "key": "field_coop_fm_item_sub",
+                                    "label": "Tiêu đề phụ bên trong",
+                                    "name": "sub_title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "50"
+                                    }
+                                },
+                                {
+                                    "key": "field_coop_fm_item_desc",
+                                    "label": "Nội dung mô tả chi tiết",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 3
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_coop_partners": {
+                    "key": "layout_coop_partners",
+                    "name": "cooperation_partners",
+                    "label": "4. Đối Tác Nghiên Cứu & Nguyên Liệu",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_coop_pt_disable",
+                            "label": "Ẩn section này",
+                            "name": "disable",
+                            "type": "true_false",
+                            "ui": 1,
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_coop_pt_title",
+                            "label": "Tiêu đề khối",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_coop_pt_desc",
+                            "label": "Nội dung giới thiệu đối tác",
+                            "name": "desc",
+                            "type": "wysiwyg",
+                            "toolbar": "full",
+                            "media_upload": 0
+                        },
+                        {
+                            "key": "field_coop_pt_items",
+                            "label": "Danh sách ảnh slide đối tác (680×454)",
+                            "name": "partner_items",
+                            "type": "repeater",
+                            "layout": "block",
+                            "button_label": "Thêm ảnh đối tác",
+                            "sub_fields": [
+                                {
+                                    "key": "field_coop_pt_item_img",
+                                    "label": "Ảnh đối tác",
+                                    "name": "image",
+                                    "type": "image",
+                                    "return_format": "id",
+                                    "preview_size": "medium",
+                                    "wrapper": {
+                                        "width": "40"
+                                    }
+                                },
+                                {
+                                    "key": "field_coop_pt_item_title",
+                                    "label": "Chú thích ảnh (Alt)",
+                                    "name": "title",
+                                    "type": "text",
+                                    "wrapper": {
+                                        "width": "60"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 },
                 "layout_coop_process": {
                     "key": "layout_coop_process",
                     "name": "cooperation_process",
-                    "label": "3. Quy trình R&D & Gia công OEM\/ODM 6 Bước",
+                    "label": "5. Quy Trình Nghiên Cứu Và Sản Xuất (Ảnh Lab & 3 Định Hướng)",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "ID": 0,
                             "key": "field_coop_p_disable",
                             "label": "Ẩn section này",
                             "name": "disable",
-                            "aria-label": "",
-                            "prefix": "acf",
                             "type": "true_false",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
                             "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_coop_process",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
+                            "default_value": 0
                         },
                         {
-                            "ID": 0,
-                            "key": "field_coop_p_title",
-                            "label": "Tiêu đề khối quy trình",
-                            "name": "title",
-                            "aria-label": "",
-                            "prefix": "acf",
+                            "key": "field_coop_p_heading",
+                            "label": "Tiêu đề khối",
+                            "name": "section_heading",
                             "type": "text",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
                             "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_coop_process",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
+                                "width": "50"
+                            }
                         },
                         {
-                            "ID": 0,
-                            "key": "field_coop_p_steps",
-                            "label": "Các bước quy trình",
-                            "name": "process_steps",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "repeater",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
+                            "key": "field_coop_p_subtitle",
+                            "label": "Mô tả phụ dưới tiêu đề (Tùy chọn)",
+                            "name": "subtitle",
+                            "type": "text",
                             "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
+                                "width": "50"
+                            }
+                        },
+                        {
+                            "key": "field_coop_p_lab_img",
+                            "label": "Ảnh phòng Lab bên trái (400×533)",
+                            "name": "lab_image",
+                            "type": "image",
+                            "return_format": "id",
+                            "preview_size": "medium",
+                            "wrapper": {
+                                "width": "35"
+                            }
+                        },
+                        {
+                            "key": "field_coop_p_intro",
+                            "label": "Đoạn giới thiệu bên cạnh ảnh phòng Lab",
+                            "name": "intro_desc",
+                            "type": "wysiwyg",
+                            "toolbar": "full",
+                            "media_upload": 0,
+                            "wrapper": {
+                                "width": "65"
+                            }
+                        },
+                        {
+                            "key": "field_coop_p_pillars",
+                            "label": "3 Hướng Phát Triển Công Thức (01, 02, 03)",
+                            "name": "rd_pillars",
+                            "type": "repeater",
                             "layout": "block",
-                            "button_label": "Thêm bước",
-                            "parent_layout": "layout_coop_process",
-                            "_name": "process_steps",
-                            "_valid": 1,
+                            "button_label": "Thêm hướng phát triển",
                             "sub_fields": [
                                 {
-                                    "ID": 0,
-                                    "key": "field_step_num",
-                                    "label": "Bước số (01, 02...)",
-                                    "name": "step_num",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "type": "text",
-                                    "value": null,
-                                    "menu_order": 0,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_p_steps",
-                                    "wrapper": {
-                                        "width": "20",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "step_num",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_coop_p_steps"
-                                },
-                                {
-                                    "ID": 0,
-                                    "key": "field_step_title",
-                                    "label": "Tên bước",
+                                    "key": "field_coop_pil_title",
+                                    "label": "Tiêu đề (VD: 01 - Từ sản phẩm có sẵn)",
                                     "name": "title",
-                                    "aria-label": "",
-                                    "prefix": "acf",
                                     "type": "text",
-                                    "value": null,
-                                    "menu_order": 1,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_p_steps",
                                     "wrapper": {
-                                        "width": "80",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "_name": "title",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_coop_p_steps"
+                                        "width": "50"
+                                    }
                                 },
                                 {
-                                    "ID": 0,
-                                    "key": "field_step_desc",
-                                    "label": "Mô tả chi tiết bước",
-                                    "name": "desc",
-                                    "aria-label": "",
-                                    "prefix": "acf",
-                                    "type": "textarea",
-                                    "value": null,
-                                    "menu_order": 2,
-                                    "instructions": "",
-                                    "required": false,
-                                    "id": "",
-                                    "class": "",
-                                    "conditional_logic": false,
-                                    "parent": "field_coop_p_steps",
+                                    "key": "field_coop_pil_sub",
+                                    "label": "Mô tả đối tượng (chữ xanh)",
+                                    "name": "subtitle",
+                                    "type": "text",
                                     "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "rows": 2,
-                                    "_name": "desc",
-                                    "_valid": 1,
-                                    "default_value": "",
-                                    "new_lines": "",
-                                    "maxlength": "",
-                                    "placeholder": "",
-                                    "pll_default_value": "",
-                                    "parent_repeater": "field_coop_p_steps"
+                                        "width": "50"
+                                    }
+                                },
+                                {
+                                    "key": "field_coop_pil_desc",
+                                    "label": "Nội dung chi tiết",
+                                    "name": "desc",
+                                    "type": "textarea",
+                                    "rows": 3
                                 }
-                            ],
-                            "min": 0,
-                            "max": 0,
-                            "rows_per_page": 20,
-                            "collapsed": ""
+                            ]
                         }
-                    ],
-                    "min": "",
-                    "max": ""
-                },
-                "layout_coop_form": {
-                    "key": "layout_coop_form",
-                    "name": "cooperation_form",
-                    "label": "4. Form Đăng Ký Tư Vấn R&D",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "ID": 0,
-                            "key": "field_coop_f_disable",
-                            "label": "Ẩn section này",
-                            "name": "disable",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "true_false",
-                            "value": null,
-                            "menu_order": 0,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "ui": 1,
-                            "default_value": 0,
-                            "parent_layout": "layout_coop_form",
-                            "_name": "disable",
-                            "_valid": 1,
-                            "message": "",
-                            "ui_on_text": "",
-                            "ui_off_text": "",
-                            "pll_default_value": 0
-                        },
-                        {
-                            "ID": 0,
-                            "key": "field_coop_f_title",
-                            "label": "Tiêu đề form",
-                            "name": "title",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "text",
-                            "value": null,
-                            "menu_order": 1,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_coop_form",
-                            "_name": "title",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        },
-                        {
-                            "ID": 0,
-                            "key": "field_coop_f_subtitle",
-                            "label": "Mô tả phụ",
-                            "name": "subtitle",
-                            "aria-label": "",
-                            "prefix": "acf",
-                            "type": "text",
-                            "value": null,
-                            "menu_order": 2,
-                            "instructions": "",
-                            "required": false,
-                            "id": "",
-                            "class": "",
-                            "conditional_logic": false,
-                            "parent": "field_vinacos_coop_fc",
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            },
-                            "parent_layout": "layout_coop_form",
-                            "_name": "subtitle",
-                            "_valid": 1,
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "pll_default_value": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
+                    ]
                 }
-            },
-            "_name": "cooperation_sections",
-            "_valid": 1,
-            "min": "",
-            "max": ""
+            }
         }
     ],
     "location": [
@@ -648,7 +347,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/template-page-cooperation.php"
+                "value": "templates/template-page-cooperation.php"
             }
         ],
         [
@@ -671,13 +370,6 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": [],
     "active": true,
-    "description": "",
-    "show_in_rest": false,
-    "display_title": "",
-    "allow_ai_access": false,
-    "ai_description": "",
-    "local": "php",
-    "_valid": true
+    "modified": 1794417196
 }

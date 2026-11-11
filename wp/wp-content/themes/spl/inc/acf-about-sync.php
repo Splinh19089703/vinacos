@@ -915,14 +915,22 @@ function spl_about_admin_helper_notices(): void {
 	}
 
 	if ( 'edit' === $screen->base ) {
+		$edit_944    = admin_url( 'post.php?post=944&action=edit' );
+		$en_rd_id    = function_exists( 'pll_get_post' ) ? (int) pll_get_post( 944, 'en' ) : 0;
+		$en_rd_btn   = $en_rd_id > 0
+			? sprintf( ' <a class="button button-small" style="margin-left:4px;vertical-align:baseline;" href="%s">Sửa R&amp;D System (EN — ID %d)</a>', esc_url( admin_url( 'post.php?post=' . $en_rd_id . '&action=edit' ) ), $en_rd_id )
+			: '';
 		printf(
 			'<div class="notice notice-info is-dismissible" style="padding:10px 14px;">' .
-			'<p style="margin:0;">💡 <strong>Truy cập nhanh Trang Giới Thiệu đang chạy trên Menu:</strong> ' .
-			'<a class="button button-small button-primary" style="margin-left:6px;vertical-align:baseline;" href="%s">Sửa Về chúng tôi (Tiếng Việt — ID 942)</a> ' .
-			'<a class="button button-small" style="margin-left:4px;vertical-align:baseline;" href="%s">Sửa About Us (English — ID 1052)</a></p>' .
+			'<p style="margin:0;">💡 <strong>Truy cập nhanh các trang chính trên Menu:</strong> ' .
+			'<a class="button button-small button-primary" style="margin-left:6px;vertical-align:baseline;" href="%s">Sửa Về chúng tôi (ID 942)</a> ' .
+			'<a class="button button-small" style="margin-left:4px;vertical-align:baseline;" href="%s">Sửa About Us (EN — ID 1052)</a> ' .
+			'<a class="button button-small button-primary" style="margin-left:8px;vertical-align:baseline;" href="%s">Sửa Hệ Thống R&amp;D (ID 944)</a>%s</p>' .
 			'</div>',
 			esc_url( $edit_942 ),
-			esc_url( $edit_en )
+			esc_url( $edit_en ),
+			esc_url( $edit_944 ),
+			$en_rd_btn
 		);
 	}
 }
